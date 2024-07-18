@@ -11,7 +11,7 @@ const CreateAccount = () => {
         </div>
         <div className="section form">
             {/* Add React form component */}
-            <p>***Form here***</p>
+            <p>***Create Account Form here***</p>
         </div>
     </div>;
 };
