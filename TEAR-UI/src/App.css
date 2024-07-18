@@ -36,6 +36,44 @@
   color: white; 
 }
 
+.wrapper {
+  display: flex; 
+  width: 100vw; 
+  height: auto; 
+}
+
+.section {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  width: 50%; 
+  height: 100vh; 
+}
+
+.informational {
+  background-color: var(--grey); 
+  align-items: center; 
+}
+
+.informational h1 {
+  color: var(--white);
+}
+
+.informational h4 {
+  color: var(--dark-grey);
+}
+
+p > a {
+  color: white; 
+  font-weight: bold; 
+}
+
+p > a:hover{
+  color: #EBEEF5; 
+  font-weight: bold; 
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

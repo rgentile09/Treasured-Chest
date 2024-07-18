@@ -11,6 +11,7 @@ import Home from "./pages";
 import Login from "./pages/login";
 import Memories from "./pages/memories";
 import Children from "./pages/children";
+import CreateAccount from "./pages/create-account";
 
 function App() {
   return (
@@ -19,14 +20,9 @@ function App() {
         <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route
-                path="/memories"
-                element={<Memories />}
-            />
-            <Route
-                path="/children"
-                element={<Children />}
-            />
+            <Route path="/memories" element={<Memories />} />
+            <Route path="/children" element={<Children />} />
+            <Route path="/create-account" element={<CreateAccount />} />
         </Routes>
     </Router>
   );

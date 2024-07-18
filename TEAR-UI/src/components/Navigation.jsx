@@ -5,7 +5,7 @@ const Navigation = () => {
         <nav className="navbar navbar-expand-lg navbar-dark">
 
             <a className="navbar-brand" href="/">Treasured Chest</a>
-            
+
             <div className="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul className="navbar-nav">
                     <li className="nav-item active">
@@ -16,6 +16,9 @@ const Navigation = () => {
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="/children">Children</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="/create-account">Create Account</a>
                     </li>
                 </ul>
             </div>
