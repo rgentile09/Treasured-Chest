@@ -1,8 +1,15 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+}
+
+:root {
+	--dark-grey: #565862; 
+	--grey: #A1A4B2; 
+	--light-grey: #E7E8EE; 
+	--dark-gold: #C7791E; 
+	--gold: #FFAA47; 
+	--white: #FFFFFF;
 }
 
 .logo {
@@ -16,6 +23,56 @@
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.navbar {
+  width: 100vw; 
+  height: 5rem;
+  padding: 2rem 2rem; 
+  background-color: var(--dark-grey); 
+}
+
+.nav-item {
+  color: white; 
+}
+
+.wrapper {
+  display: flex; 
+  width: 100vw; 
+  height: auto; 
+}
+
+.section {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  width: 50%; 
+  height: 100vh; 
+  padding: 3rem; 
+}
+
+.informational {
+  background-color: var(--grey); 
+  align-items: center; 
+}
+
+.informational h1 {
+  color: var(--white);
+}
+
+.informational h4 {
+  color: var(--dark-grey);
+}
+
+p > a {
+  color: white; 
+  font-weight: bold; 
+}
+
+p > a:hover{
+  color: #EBEEF5; 
+  font-weight: bold; 
 }
 
 @keyframes logo-spin {
