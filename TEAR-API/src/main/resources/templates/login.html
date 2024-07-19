@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="path/to/your/css/file.css">
+    <!-- Add the link to the CSS file -->
+</head>
+<body>
+
+<main>
+    <h1>Log In</h1>
+
+    <form method="post" action="/your-login-endpoint">
+        <div class="container">
+            <div class="row">
+                <div class="form-item col-4">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" />
+                    <p class="error" id="username-error"></p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="form-item col-4">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" />
+                    <p class="error" id="password-error"></p>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit">Log In</button>
+    </form>
+    <p class="mt-5">Don't have an account? <a href="/register">Register here.</a></p>
+</main>
+
+</body>
+</html>
