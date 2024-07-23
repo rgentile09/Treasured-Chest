@@ -14,7 +14,7 @@ public class ChildController {
     @Autowired
     private ChildRepository childRepository;
 
-    @GetMapping
+    @GetMapping("")
     public List<Child> getAllChildren() {
         return (List<Child>) childRepository.findAll();
     }

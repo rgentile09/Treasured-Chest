@@ -5,15 +5,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 import java.util.Date;
+
 @Entity
 public class Child {
-        @Id
-        @GeneratedValue
-        private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-        private String firstName;
-        private String birthDate;
-        private String childPhoto;
+    private String firstName;
+    private String birthDate;
+    private String childPhoto;
 
     public Child() {
     }
@@ -33,6 +34,9 @@ public class Child {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
