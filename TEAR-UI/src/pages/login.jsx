@@ -30,7 +30,7 @@ const Login = () => {
          </div> */}
             <form> 
                 <input type="text" id="title" placeholder="Title"></input>
-                <input type="textarea" id="textarea" placeholder="Description"></input>
+                <textarea id="textarea" placeholder="Description"></textarea>
             </form>
             <p>***Login Form here***</p>
         </div>
