@@ -3,8 +3,13 @@ import React from "react";
 const Navigation = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark">
-
-            <a className="navbar-brand" href="/">Treasured Chest</a>
+            
+            <a className="navbar-brand" href="/">
+                <div className="logo-link">
+                    <img className="logo" src="src/assets/treasured-chest-logo.svg"></img>
+                    <h2>Treasured Chest</h2>
+                </div>
+            </a>
 
             <div className="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul className="navbar-nav">
