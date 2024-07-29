@@ -72,6 +72,10 @@ img.logo {
   color: var(--dark-grey);
 }
 
+.form {
+  padding: 50px !important; 
+}
+
 p > a {
   color: white; 
   font-weight: bold; 
@@ -80,6 +84,52 @@ p > a {
 p > a:hover{
   color: #EBEEF5; 
   font-weight: bold; 
+}
+
+form {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 1.25rem; 
+  width: 100%; 
+}
+
+form > label {
+  font-weight: 500; 
+}
+
+input {
+  width: 100%; 
+  padding: 10px; 
+  /* border: 5px var(--dark-grey); */
+  border-width: 2px; 
+  border-color: var(--grey);  
+  border-style: solid; 
+  border-radius: 5px; 
+  min-height: 50px; 
+  max-width: 500px; 
+  transition: border-width 0.4s ease-in-out; 
+}
+
+input[type=textarea] {
+  min-height: 100px; 
+}
+
+input[type=textarea]::placeholder {
+  left: 0px; 
+  top: 0; 
+  vertical-align: 0; 
+}
+
+input:focus {
+  /* transition:  */
+  outline: none; 
+  border-width: 3px; 
+  border-color: var(--dark-grey); 
+}
+
+::placeholder {
+  color: var(--grey); 
 }
 
 /* Desktop */
@@ -126,7 +176,7 @@ p > a:hover{
   .section {
     width: 100%; 
     height: 50vh; 
-    padding: 1rem !important; 
+    padding: 1.25rem !important; 
   }
 
   .informational {

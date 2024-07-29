@@ -13,7 +13,7 @@ const Navigation = () => {
 
             <div className="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul className="navbar-nav">
-                    <li className="nav-item active">
+                    <li className="nav-item">
                         <a className="nav-link" href="/login">Login</a>
                     </li>
                     <li className="nav-item">
