@@ -28,4 +28,19 @@ public class ChildController {
        }
         return childRepository.save(newChild);
     }
+    @DeleteMapping("/delete")
+    public void deleteChild(@RequestParam Long id) {
+        childRepository.deleteById(id);
+    }
+    @PatchMapping("/update/{id}")
+    public Child updateChild (@RequestParam Long id, String firstName, @RequestParam String birthDate, @RequestParam(required = false) String childPhoto) {
+        Child updateChild = childRepository.findById(id).get();
+        updateChild.setFirstName(firstName);
+        updateChild.setBirthDate(birthDate);
+        if (childPhoto != null) {
+            updateChild.setChildPhoto(childPhoto);
+        }
+        return childRepository.save(updateChild);
+    }
+
 }
