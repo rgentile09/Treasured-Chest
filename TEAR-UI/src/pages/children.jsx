@@ -4,9 +4,9 @@ import React, { useState } from "react";
 
 
 const Children = ({ addChild }) => {
-    const [firstName, setFirstName] = useState("");
-    const [birthDate, setBirthDate] = useState("");
-    const [childPhoto, setChildPhoto] = useState("");
+    const [firstName, setFirstName] = useState('');
+    const [birthDate, setBirthDate] = useState('');
+    const [childPhoto, setChildPhoto] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
