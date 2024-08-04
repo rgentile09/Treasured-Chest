@@ -1,4 +1,4 @@
-package org.launchcode.TEAR_API.data;
+package org.launchcode.TEAR_API.repositories;
 
 import org.launchcode.TEAR_API.models.Memory;
 import org.springframework.data.repository.CrudRepository;
