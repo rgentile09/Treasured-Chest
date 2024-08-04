@@ -27,6 +27,12 @@ const Navigation = () => {
                     </li>
                 </ul>
             </div>  
+
+            <div className="hamburger">
+                <div className="bar"></div>
+                <div className="bar"></div>
+                <div className="bar"></div>
+            </div>
         </nav>
         
     )
