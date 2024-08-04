@@ -26,10 +26,7 @@ const Navigation = () => {
                         <a className="nav-link" href="/create-account">Create Account</a>
                     </li>
                 </ul>
-            </div>
-
-            
-            
+            </div>  
         </nav>
         
     )
