@@ -7,10 +7,7 @@ import jakarta.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class Child {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Child extends AbstractEntity{
 
     private String firstName;
     private String birthDate;
@@ -28,14 +25,6 @@ public class Child {
         this.firstName = firstName;
         this.birthDate = birthDate;
         this.childPhoto = childPhoto;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
