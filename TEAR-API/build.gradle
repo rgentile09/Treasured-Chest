@@ -28,6 +28,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'com.google.photos.library:google-photos-library-client:1.7.3'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+   
 }
 
 tasks.named('test') {
