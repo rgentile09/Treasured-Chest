@@ -16,7 +16,7 @@
 }
 
 body {
-  font-family: Inter !important; 
+  font-family: Inter, sans-serif !important; 
   color: var(--dark-grey) !important; 
 }
 
@@ -143,6 +143,23 @@ input:focus, textarea:focus {
     width: 50%; 
     height: 100vh; 
     padding: 3rem; 
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .hamburger {
+    display: flex; 
+    flex-direction: column; 
+    height: 25px; 
+    width: 30px; 
+    justify-content: space-between; 
+    cursor: pointer; 
+  }
+
+  .bar {
+    background-color: var(--white); 
+    height: 5px; 
+    width: 100%; 
   }
 }
 
