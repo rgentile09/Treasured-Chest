@@ -1,40 +1,56 @@
-// Where you can view any registered children (Aakash's child page example)
-
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-
-const Children = ({ addChild }) => {
+function Children({ setChild }) {
     const [firstName, setFirstName] = useState('');
     const [birthDate, setBirthDate] = useState('');
     const [childPhoto, setChildPhoto] = useState('');
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (firstName !== "" && birthDate !== "" && childPhoto != "") {
-            
-            addChild(firstName, birthDate, childPhoto);
-            setFirstName("");
-            setBirthDate("");
-            setChildPhoto("");
-
-    }
+    const handleNameChange = (event) => {
+        setFirstName(event.target.value);
     };
+
+    const handleBirthDateChange = (event) => {
+        setBirthDate(event.target.value);
+    };
+
+    const handlePhotoChange = (event) => {
+        const file = event.target.files[0];
+        setChildPhoto(file);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        
+        const child = {
+            firstName,
+            birthDate,
+            image: childPhoto ? URL.createObjectURL(childPhoto) : null,
+        };
+        setChild(child);
+        navigate('/displayChildren');
+    };
+
     return (
-
-        <form onSubmit={handleSubmit}>
-            First Name<br />
-            <input type="text" id="firstName" name="firstName"
-                value={firstName} onChange={(e) => setFirstName(e.target.value)} required /><br />
-            Birthdate<br />
-            <input type="date" id="birthDate" name="birthDate"
-                value={birthDate} onChange={(e) => setBirthDate(e.target.value)} required /><br />
-            Add a photo<br />
-            <input type="file" id="childPhoto" name="childPhoto"
-                value={childPhoto} onChange={(e) => setChildPhoto(e.target.value)} required /><br />
-            Submit new Child for user<input type="submit" name="submitChild"/><br />
-        </form>
-
-    )
-};
+        <div>
+            <form onSubmit={handleSubmit}>
+                <label>First Name<br />
+                    <input type="text" id="firstName" name="firstName"
+                        value={firstName} onChange={handleNameChange} />
+                </label><br />
+                <label>Birthdate<br />
+                    <input type="date" id="birthDate" name="birthDate"
+                        value={birthDate} onChange={handleBirthDateChange} />
+                </label><br />
+                <label>Add a photo<br />
+                    <input type="file" id="childPhoto" 
+                        onChange={handlePhotoChange} />
+                </label><br />
+                <button type="submit" name="submitChild">Submit new Child for user</button><br />
+            </form>
+        </div>
+    );
+}
 
 export default Children;
