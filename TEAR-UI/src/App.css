@@ -42,7 +42,7 @@ img.logo {
   height: 5rem;
   padding: 2rem 2rem; 
   background-color: var(--dark-grey); 
-}
+} */
 
 .nav-item {
   color: white; 
@@ -50,6 +50,7 @@ img.logo {
 
 .wrapper {
   display: flex; 
+  top: 80px; 
 }
 
 .section {
@@ -149,6 +150,9 @@ input:focus, textarea:focus {
 @media screen and (max-width: 992px) {
   .hamburger {
     display: flex; 
+    position: fixed; 
+    top: 26px; 
+    right: 28px; 
     flex-direction: column; 
     height: 25px; 
     width: 30px; 
