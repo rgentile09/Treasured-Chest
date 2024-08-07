@@ -38,11 +38,11 @@ img.logo {
 }
 
 .navbar {
-  width: 100vw; 
-  height: 5rem;
+  width: 100vw - 80px; 
+  height: auto; 
   padding: 2rem 2rem; 
   background-color: var(--dark-grey); 
-} */
+}
 
 .nav-item {
   color: white; 
