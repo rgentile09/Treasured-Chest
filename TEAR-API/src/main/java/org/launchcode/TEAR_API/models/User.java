@@ -1,8 +1,11 @@
 package org.launchcode.TEAR_API.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.List;
 
 @Entity
 public class User extends AbstractEntity {
@@ -12,6 +15,10 @@ public class User extends AbstractEntity {
 
     @NotNull
     private String pwHash;
+
+    @OneToMany(mappedBy = "user")
+    private List<Child> children;
+
 
     public User() {}
 
@@ -30,4 +37,11 @@ public class User extends AbstractEntity {
         return encoder.matches(password, pwHash);
     }
 
+    public List<Child> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Child> children) {
+        this.children = children;
+    }
 }
