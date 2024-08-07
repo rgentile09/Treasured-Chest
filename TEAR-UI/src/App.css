@@ -16,7 +16,7 @@
 }
 
 body {
-  font-family: Inter !important; 
+  font-family: Inter, sans-serif !important; 
   color: var(--dark-grey) !important; 
 }
 
@@ -38,8 +38,8 @@ img.logo {
 }
 
 .navbar {
-  width: 100vw; 
-  height: 5rem;
+  width: 100vw - 80px; 
+  height: auto; 
   padding: 2rem 2rem; 
   background-color: var(--dark-grey); 
 }
@@ -50,6 +50,7 @@ img.logo {
 
 .wrapper {
   display: flex; 
+  top: 80px; 
 }
 
 .section {
@@ -146,6 +147,26 @@ input:focus, textarea:focus {
   }
 }
 
+@media screen and (max-width: 992px) {
+  .hamburger {
+    display: flex; 
+    position: fixed; 
+    top: 26px; 
+    right: 28px; 
+    flex-direction: column; 
+    height: 25px; 
+    width: 30px; 
+    justify-content: space-between; 
+    cursor: pointer; 
+  }
+
+  .bar {
+    background-color: var(--white); 
+    height: 5px; 
+    width: 100%; 
+  }
+}
+
 /* Tablet */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .wrapper {
@@ -183,43 +204,3 @@ input:focus, textarea:focus {
     height: auto; 
   }
 }
-
-
-/* Default React landing page CSS */
-/* @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-} */
