@@ -33,7 +33,8 @@ function Children({ setChild }) {
     };
 
     return (
-        <div>
+        <div className="wrapper">
+            <div className="form-page">
             <form onSubmit={handleSubmit}>
                 <label>First Name<br />
                     <input type="text" id="firstName" name="firstName"
@@ -49,6 +50,7 @@ function Children({ setChild }) {
                 </label><br />
                 <button type="submit" name="submitChild">Submit new Child for user</button><br />
             </form>
+            </div>
         </div>
     );
 }
