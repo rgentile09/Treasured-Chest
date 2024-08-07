@@ -35,21 +35,22 @@ function Children({ setChild }) {
     return (
         <div className="wrapper">
             <div className="form-page">
-            <form onSubmit={handleSubmit}>
-                <label>First Name<br />
-                    <input type="text" id="firstName" name="firstName"
-                        value={firstName} onChange={handleNameChange} />
-                </label><br />
-                <label>Birthdate<br />
-                    <input type="date" id="birthDate" name="birthDate"
-                        value={birthDate} onChange={handleBirthDateChange} />
-                </label><br />
-                <label>Add a photo<br />
-                    <input type="file" id="childPhoto" 
-                        onChange={handlePhotoChange} />
-                </label><br />
-                <button type="submit" name="submitChild">Submit new Child for user</button><br />
-            </form>
+                <h1 className="mb-3">Create Child Form</h1>
+                <form onSubmit={handleSubmit}>
+                    <label>First Name<br />
+                        <input type="text" id="firstName" name="firstName"
+                            value={firstName} onChange={handleNameChange} />
+                    </label><br />
+                    <label>Birthdate<br />
+                        <input type="date" id="birthDate" name="birthDate"
+                            value={birthDate} onChange={handleBirthDateChange} />
+                    </label><br />
+                    <label>Add a photo<br />
+                        <input type="file" id="childPhoto" 
+                            onChange={handlePhotoChange} />
+                    </label><br />
+                    <button type="submit" name="submitChild">Submit new Child for user</button><br />
+                </form>
             </div>
         </div>
     );
