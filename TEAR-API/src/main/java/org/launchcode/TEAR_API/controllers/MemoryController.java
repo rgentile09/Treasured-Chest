@@ -2,8 +2,6 @@ package org.launchcode.TEAR_API.controllers;
 
 import org.launchcode.TEAR_API.models.Child;
 import org.launchcode.TEAR_API.models.Memory;
-import org.launchcode.TEAR_API.repositories.ChildRepository;
-import org.launchcode.TEAR_API.repositories.MemoryRepository;
 import org.launchcode.TEAR_API.services.MemoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

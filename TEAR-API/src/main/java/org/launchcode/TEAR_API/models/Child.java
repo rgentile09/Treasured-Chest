@@ -1,9 +1,6 @@
 package org.launchcode.TEAR_API.models;
 
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity

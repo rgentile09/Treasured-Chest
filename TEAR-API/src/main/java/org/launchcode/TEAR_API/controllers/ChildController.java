@@ -16,21 +16,19 @@ public class ChildController {
     @Autowired
     private ChildRepository childRepository;
 
-    @PostMapping
-    public Child addChild(@RequestBody Child child) {
-        return childService.save(child);
+    @PostMapping("user/{userId}")
+    public Child addChild(@PathVariable Long userId, @RequestBody Child child) {
+        return childService.addChild(userId, child);
     }
-
-    @GetMapping("/user/{userId}")
-    public List<Child> getChildrenByUserId(@PathVariable Long userId) {
+    @GetMapping("user/{userId}")
+    public List<Child> getByUserId(@PathVariable Long userId) {
         return childService.findByUserId(userId);
     }
-
     @DeleteMapping("/delete")
     public void deleteChild(@RequestParam Long id) {
         childRepository.deleteById(id);
     }
-    @PatchMapping("/update/{id}")
+    @PatchMapping("/update/{userId}")
     public Child updateChild (@RequestParam Long id, String firstName, @RequestParam String birthDate, @RequestParam(required = false) String childPhoto) {
         Child updateChild = childRepository.findById(id).get();
         updateChild.setFirstName(firstName);
