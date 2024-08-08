@@ -3,7 +3,7 @@ import './App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from './components/Navigation';
 import MemoryPostForm from './components/MemoryPostForm';
-import DisplayMemory from './components/DisplayMemory';
+import DisplayMemory from './pages/DisplayMemory';
 import {
   BrowserRouter as Router,
   Routes,
@@ -37,9 +37,6 @@ function App() {
         </Routes>
 
         <div className="App">
-        <Routes>
-            <Route path="/memories" element={<MemoryPostForm setMemoryPost={setMemoryPost} />} />
-        </Routes>
         </div>
     </Router>
   );
