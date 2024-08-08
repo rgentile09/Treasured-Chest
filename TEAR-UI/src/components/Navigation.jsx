@@ -4,7 +4,7 @@ const Navigation = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark">
             
-           <a className="navbar-brand" href="/">
+            <a className="navbar-brand" href="/login">
                 <div className="logo-link">
                     <img className="logo" src="src/assets/treasured-chest-logo.svg"></img>
                     <h2>Treasured Chest</h2>
@@ -18,26 +18,19 @@ const Navigation = () => {
            <div className="collapse navbar-collapse" id="navbarNavDropdown">
                <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li className="nav-item">
-                        <a className="nav-link" href="/login">Login</a>
+                        <a className="nav-link" href="/DisplayChildren">Children</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/memories">Memories</a>
+                        <a className="nav-link" href="/memories">Add a Memory</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/children">Children</a>
+                        <a className="nav-link" href="/children">Add a child</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/create-account">Create Account</a>
+                        <a className="nav-link" href="/questionaire">Questionaire</a>
                     </li>
              </ul>
            </div>  
-
-            {/* <div className="hamburger">
-               <div className="bar"></div>
-                <div className="bar"></div>
-                 <div className="bar"></div>
-            </div> */}
-        
         </nav>
         
     )
