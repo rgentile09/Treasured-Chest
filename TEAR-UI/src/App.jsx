@@ -29,7 +29,7 @@ function App() {
         <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/memories" element={<Memories />} />
+            <Route path="/memories" element={<Memories setMemoryPost={setMemoryPost}/>} />
             <Route path="/children" element={<Children setChild={setChild} />} />
             <Route path="/displayChildren" element={<DisplayChildren child={child} />} />
             <Route path="/display" element={<DisplayMemory memoryPost={memoryPost} />} />

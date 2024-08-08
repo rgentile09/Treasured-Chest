@@ -49,7 +49,7 @@ function Memories({ setMemoryPost }) {
                         <label htmlFor="description" className="form-label" >Description:</label>
                         <textarea id="description" placeholder="Enter a description for the Memory" value={description} onChange={handleDescriptionChange} required style={{ display: 'block', marginBottom: '10px', width: '100%', height: '100px' }} />
                     </div>
-                    <button type="submit" className="btn btn-success">Submit Memory</button>
+                    <button type="submit" className="btn btn-success">Add Memory</button>
                 </form>
             </div>
         </div>
