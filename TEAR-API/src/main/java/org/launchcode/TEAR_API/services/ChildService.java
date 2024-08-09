@@ -23,7 +23,7 @@ public class ChildService {
         child.setUser(user);
         return childRepository.save(child);
     }
-    public List<Child> findByUserId(Long userId) {
+    public Child findByUserId(Long userId) {
         return childRepository.findByUserId(userId);
     }
 }

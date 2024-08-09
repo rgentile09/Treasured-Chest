@@ -1,6 +1,8 @@
 package org.launchcode.TEAR_API.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 @Entity
@@ -9,13 +11,13 @@ public class Child extends AbstractEntity{
     @JoinColumn(name="user_id")
     private User user;
     @Column
+    @NotNull
     private String firstName;
     @Column
+    @NotNull
     private String birthDate;
     @Column
     private String childPhoto;
-    @OneToMany(mappedBy = "child")
-    private List<Memory> memories;
 
     public Child() {
     }
@@ -33,21 +35,6 @@ public class Child extends AbstractEntity{
         this.firstName = firstName;
         this.birthDate = birthDate;
         this.childPhoto = childPhoto;
-    }
-
-    public Child(String firstName, String birthDate, String childPhoto, List<Memory> memories) {
-        this.firstName = firstName;
-        this.birthDate = birthDate;
-        this.childPhoto = childPhoto;
-        this.memories = memories;
-    }
-
-    public Child(User user, String firstName, String birthDate, String childPhoto, List<Memory> memories) {
-        this.user = user;
-        this.firstName = firstName;
-        this.birthDate = birthDate;
-        this.childPhoto = childPhoto;
-        this.memories = memories;
     }
 
     public String getFirstName() {
@@ -73,15 +60,6 @@ public class Child extends AbstractEntity{
     public void setChildPhoto(String childPhoto) {
         this.childPhoto = childPhoto;
     }
-
-    public List<Memory> getMemories() {
-        return memories;
-    }
-
-    public void setMemories(List<Memory> memories) {
-        this.memories = memories;
-    }
-
     public User getUser() {
         return user;
     }

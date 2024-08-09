@@ -12,13 +12,8 @@ public class User extends AbstractEntity {
 
     @NotNull
     private String username;
-
     @NotNull
     private String pwHash;
-
-    @OneToMany(mappedBy = "user")
-    private List<Child> children;
-
 
     public User() {}
 
@@ -31,17 +26,22 @@ public class User extends AbstractEntity {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPwHash() {
+        return pwHash;
+    }
+
+    public void setPwHash(String pwHash) {
+        this.pwHash = pwHash;
+    }
+
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public boolean isMatchingPassword(String password) {
         return encoder.matches(password, pwHash);
     }
 
-    public List<Child> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Child> children) {
-        this.children = children;
-    }
 }

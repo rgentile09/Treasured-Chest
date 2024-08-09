@@ -15,9 +15,9 @@ public class MemoryController {
     @Autowired
     private MemoryService memoryService;
 
-    @PostMapping
-    public Memory addMemory(@RequestBody Memory memory) {
-        return memoryService.save(memory);
+    @PostMapping("/child/{childId}")
+    public Memory addMemory(@PathVariable Long childId, @RequestBody Memory memory) {
+        return memoryService.addMemory(childId, memory);
     }
 
     @GetMapping("/child/{childId}")

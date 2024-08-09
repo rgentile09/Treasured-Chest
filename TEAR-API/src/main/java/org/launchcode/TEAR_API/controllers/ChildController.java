@@ -21,10 +21,10 @@ public class ChildController {
         return childService.addChild(userId, child);
     }
     @GetMapping("user/{userId}")
-    public List<Child> getByUserId(@PathVariable Long userId) {
+    public Child getByUserId(@PathVariable Long userId) {
         return childService.findByUserId(userId);
     }
-    @DeleteMapping("/delete")
+    @DeleteMapping("user/{userId}/delete")
     public void deleteChild(@RequestParam Long id) {
         childRepository.deleteById(id);
     }
