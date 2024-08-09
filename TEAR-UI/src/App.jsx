@@ -23,7 +23,7 @@ function App() {
   return (
     <Router>
         <Navigation />
-        
+      <div className="App">
         <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
@@ -32,14 +32,9 @@ function App() {
             <Route path="/display" element={<DisplayMemory memoryPost={memoryPost} />} />
             <Route path="/create-account" element={<CreateAccount />} />
         </Routes>
-
-        <div className="App">
-        <Routes>
-            <Route path="/memories" element={<MemoryPostForm setMemoryPost={setMemoryPost} />} />
-        </Routes>
-        </div>
-    </Router>
-  );
+     </div>
+   </Router>
+       );
 }
 
 export default App

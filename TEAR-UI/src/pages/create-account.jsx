@@ -8,6 +8,7 @@ const CreateAccount = () => {
     const [form, setForm] = useState({
         firstName: "",
         lastName: "",
+        username: "",
         email: "",
         password: "",
         verifyPassword: ""
@@ -35,6 +36,9 @@ const CreateAccount = () => {
         if (form.email.length < 5 || form.email.length > 50) {
             newErrors.email = "Email must be between 5 and 50 characters.";
         }
+        if (form.username.length < 5 || form.username.length > 30) {
+            newErrors.username = "Username must be between 5 and 30 characters.";   
+        }
         if (form.password.length < 5 || form.password.length > 30) {
             newErrors.password = "Password must be between 5 and 30 characters.";
         }
@@ -53,16 +57,17 @@ const CreateAccount = () => {
             setErrors({});
             // Submit form data to the server
             try {
-                const response = await fetch("/api/create-account", {
+                const response = await fetch("http://localhost:5173/create-account", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify(form)
                 });
+              
                 if (response.ok) {
                     console.log("Form submitted successfully");
-                    navigate("/login");
+                    navigate("/create-account");
                     // Handle successful form submission (e.g., redirect to login page)
                 } else {
                     const errorData = await response.json();

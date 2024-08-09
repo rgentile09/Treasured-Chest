@@ -9,7 +9,7 @@ const cookieSession = require('cookie-session');
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 5173;
+const port = process.env.PORT || 3306;
 
 // Connect to MySQL using Sequelize
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
@@ -42,45 +42,11 @@ const User = sequelize.define('User', {
     timestamps: false,
 });
 
-app.use((req, res, next) => {
-    const authHeader = req.get('Authorization');
-    if (authHeader) {
-        res.setHeader('www-authenticate', 'Basic realm="Secure Area"');
-        res.status(401).send('Unauthorized');
-    }
-    console.log('CORS middleware');
-    next();
-});
-app.get('/protected',(req,res)=>{
-    res.send('Protected route');
-});
-
-app.listen(5173,() => {
-    console.log('Server running on port 5173');
-});
-
-app.use((req, res, next) => {
-    console.log('BodyParser middleware');
-    next();
-});
+// Middleware
+app.use(cors());
 app.use(bodyParser.json());
-
-app.use((req, res, next) => {
-    console.log('Helmet middleware');
-    next();
-});
 app.use(helmet());
-
-app.use((req, res, next) => {
-    console.log('Static files middleware');
-    next();
-});
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use((req, res, next) => {
-    console.log('CookieSession middleware');
-    next();
-});
 app.use(cookieSession({
     name: 'session',
     keys: [process.env.SESSION_SECRET || 'default_secret_key'],
@@ -91,11 +57,14 @@ app.use(cookieSession({
     },
 }));
 
+
+
 // Route to serve the login HTML page
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.jsx'));
 });
 
+// Route to handle account creation
 app.post('/create-account', async (req, res) => {
     console.log('Request received at /create-account');
     const { firstName, lastName, email, password, verifyPassword } = req.body;
@@ -109,7 +78,7 @@ app.post('/create-account', async (req, res) => {
         const newUser = await User.create({ firstName, lastName, email, password: hashedPassword });
         res.status(201).send({ message: 'User registered successfully' });
     } catch (error) {
-        if (error.name === 'SequelizeUniqueConstraintError') { // Duplicate key error
+        if (error.name === 'SequelizeUniqueConstraintError') {
             res.status(400).send({ errors: { email: 'Email already exists' } });
         } else {
             res.status(400).send({ errors: { general: 'Error registering user' } });
@@ -117,6 +86,18 @@ app.post('/create-account', async (req, res) => {
     }
 });
 
+// Protected route example
+app.get('/protected', (req, res) => {
+    res.send('Protected route');
+});
+
+app.get('*', (req, res) => {
+    res.status(path.join(__dirname, 'public', 'home.jsx'));
+}); 
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Start the server and connect to the database
 app.listen(port, async () => {
     try {
         await sequelize.authenticate();
