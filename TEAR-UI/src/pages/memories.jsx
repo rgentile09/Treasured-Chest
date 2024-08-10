@@ -32,19 +32,27 @@ function Memories({ setMemoryPost }) {
         navigate('/display');
     };
 
-    const [data, setData] = useState(null);
-
-    useEffect(() => {
-        fetch('https://zenquotes.io/api/quotes/')
-        .then(response => response.json())
-        .then(json => setData(json))
-        .catch(error => console.error(error));
-    }, []);
+    window.addEventListener("load", function(){
+        fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
+            response.json().then(function(json) {
+              const destination = document.getElementById("destination");
+              let index = 0; 
+              destination.addEventListener("click", function() {
+                 destination.innerHTML = `
+                    <div>
+                       <h3>Planet ${json[index].name}</h3>
+                       <img src=${json[index].image} height=250></img>
+                    </div>
+                 `;
+                 index = (index + 1) % json.length; 
+              });
+           });
+        });
+     });
 
     return (
         <div className="wrapper">
-            <div className="section informational">
-
+            <div className="section informational" id="destination">
             </div>
             <div className="section form">
             <h1 className="mb-3">Create Memory Form</h1>
