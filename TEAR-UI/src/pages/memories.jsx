@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
  
 function Memories({ setMemoryPost }) {
@@ -32,9 +32,21 @@ function Memories({ setMemoryPost }) {
         navigate('/display');
     };
 
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        fetch('https://zenquotes.io/api/quotes/')
+        .then(response => response.json())
+        .then(json => setData(json))
+        .catch(error => console.error(error));
+    }, []);
+
     return (
         <div className="wrapper">
-            <div className="form-page">
+            <div className="section informational">
+
+            </div>
+            <div className="section form">
             <h1 className="mb-3">Create Memory Form</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
