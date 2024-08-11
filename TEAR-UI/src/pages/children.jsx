@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Quote from "../components/Quote";
 
 function Children({ setChild }) {
     const [firstName, setFirstName] = useState('');
@@ -34,7 +35,10 @@ function Children({ setChild }) {
 
     return (
         <div className="wrapper">
-            <div className="form-page">
+            <div className="section informational" id="destination">
+                <Quote />
+            </div>
+            <div className="section form">
                 <h1 className="mb-3">Create Child Form</h1>
                 <form onSubmit={handleSubmit}>
                     <label>First Name<br />
