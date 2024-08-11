@@ -33,26 +33,10 @@ function Memories({ setMemoryPost }) {
         navigate('/display');
     };
 
-    window.addEventListener("load", function(){
-        fetch("https://api.quotable.io/random?tags=love|life|happiness|family").then(function(response) {
-            response.json().then(function(json) {
-              const destination = document.getElementById("destination");
-              destination.addEventListener("click", function() {
-                 destination.innerHTML = `
-                    <div>
-                        <h2>${json.content}</h2>
-                        <h3>${json.author}</h3>
-                    </div>
-                 `;
-              });
-           });
-        });
-     });
-
     return (
         <div className="wrapper">
             <div className="section informational" id="destination">
-                {/* <Quote /> */}
+                <Quote />
             </div>
             <div className="section form">
             <h1 className="mb-3">Create Memory Form</h1>
