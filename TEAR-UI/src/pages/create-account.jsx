@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import {useNavigate} from "react-router-dom";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CreateAccount = () => {
-    const navigate = useNavigate();
-
     const [form, setForm] = useState({
         firstName: "",
         lastName: "",
-        username: "",
         email: "",
+        username: "",
         password: "",
         verifyPassword: ""
     });
-
     const [errors, setErrors] = useState({});
+    const [message, setMessage] = useState("");
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,65 +22,27 @@ const CreateAccount = () => {
         });
     };
 
-    const validateForm = () => {
-        const newErrors = {};
-     
-        if (form.firstName.length < 1 || form.firstName.length > 30) {
-            newErrors.firstName = "First name must be between 1 and 30 characters.";
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        // Add your validation logic here
+        try {
+            const response = await axios.post("http://localhost:8080/user/create-account", 
+                {
+                    username: form.username,
+                    password: form.password,
+                    firstName: form.firstName,
+                    lastName: form.lastName,
+                    email: form.email,
+                },
+                {
+                    withCredentials: true,
+                } 
+            );
+            setMessage(response.data.message);
+        } catch (error) {
+            setMessage(error.response?.data?.message || "Registration failed");    
         }
-        if (form.lastName.length < 1 || form.lastName.length > 30) {
-            newErrors.lastName = "Last name must be between 1 and 30 characters.";
-        }
-        if (form.email.length < 5 || form.email.length > 50) {
-            newErrors.email = "Email must be between 5 and 50 characters.";
-        }
-        if (form.username.length < 5 || form.username.length > 30) {
-            newErrors.username = "Username must be between 5 and 30 characters.";   
-        }
-        if (form.password.length < 5 || form.password.length > 30) {
-            newErrors.password = "Password must be between 5 and 30 characters.";
-        }
-        if (form.password !== form.verifyPassword) {
-            newErrors.verifyPassword = "Passwords do not match.";
-        }
-        return newErrors;
     };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const newErrors = validateForm();
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-        } else {
-            setErrors({});
-            // Submit form data to the server
-            try {
-                const response = await fetch("http://localhost:5173/create-account", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(form)
-                });
-              
-                if (response.ok) {
-                    console.log("Form submitted successfully");
-                    navigate("/create-account");
-                    // Handle successful form submission (e.g., redirect to login page)
-                } else {
-                    const errorData = await response.json();
-                    setErrors(errorData.errors);
-                    console.error("Form submission failed");
-                    // Handle form submission failure
-                }
-            } catch (error) {
-                console.error("Error during form submission: ", error);
-                setErrors({general:" An error occured. Please try again."});
-                // Handle error during form submission
-            }
-        }
-   
-  };
 
     return (
         <div className="wrapper">
@@ -127,6 +87,17 @@ const CreateAccount = () => {
                         {errors.email && <p className="error">{errors.email}</p>}
                     </div>
                     <div className="form-group">
+                        <label>Username
+                            <input
+                                className="form-control"
+                                name="username"
+                                value={form.username}
+                                onChange={handleChange}
+                            />
+                        </label>
+                        {errors.username && <p className="error">{errors.username}</p>}
+                    </div>
+                    <div className="form-group">
                         <label>Password
                             <input
                                 className="form-control"
@@ -152,6 +123,7 @@ const CreateAccount = () => {
                     </div>
                     <input type="submit" className="btn btn-primary" value="Create Account" />
                 </form>
+                {message && <p className="message">{message}</p>}
             </div>
         </div>
     );
