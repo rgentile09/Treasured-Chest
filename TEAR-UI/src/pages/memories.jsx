@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Quote from "../components/Quote";
  
 function Memories({ setMemoryPost }) {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -33,18 +34,16 @@ function Memories({ setMemoryPost }) {
     };
 
     window.addEventListener("load", function(){
-        fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
+        fetch("https://api.quotable.io/random?tags=love|life|happiness|family").then(function(response) {
             response.json().then(function(json) {
               const destination = document.getElementById("destination");
-              let index = 0; 
               destination.addEventListener("click", function() {
                  destination.innerHTML = `
                     <div>
-                       <h3>Planet ${json[index].name}</h3>
-                       <img src=${json[index].image} height=250></img>
+                        <h2>${json.content}</h2>
+                        <h3>${json.author}</h3>
                     </div>
                  `;
-                 index = (index + 1) % json.length; 
               });
            });
         });
@@ -53,6 +52,7 @@ function Memories({ setMemoryPost }) {
     return (
         <div className="wrapper">
             <div className="section informational" id="destination">
+                {/* <Quote /> */}
             </div>
             <div className="section form">
             <h1 className="mb-3">Create Memory Form</h1>
