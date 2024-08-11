@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Login = ({ setAuthenticated }) => {
+function Login ({ setAuthenticated })  {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
     const [passwordVisible, setPasswordVisible] = useState(false);
 
+    
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
@@ -15,18 +17,27 @@ const Login = ({ setAuthenticated }) => {
         event.preventDefault();
         // Add your login logic here
         try {
-            const response = await axios.post('/api/login', {
+            if (!username || !email) {
+                throw new Error('Please provide a username or email.');
+                
+}
+
+            const response = await axios.post("http:/localhost:3306/user/login", {
                 username,
                 email,
-                password
-            });
-            if (response.data.authenticated) {
-                setAuthenticated(true);
-            }
+              password
+            }, 
+        {
+            withCredentials: true,
+         });
+
+           setAuthenticated(true);
+           setMessage(error.response.data);
         } catch (error) {
-            console.error('Login failed', error);
-        }
-    };
+            setMessage(error.response?.data?.message || "Login failed. Please try again.");
+
+            }
+      };
 
     return (
         <div className="wrapper">
@@ -38,41 +49,27 @@ const Login = ({ setAuthenticated }) => {
             <div>
                 <h2>Login</h2>
                 <form onSubmit={handleLogin}>
-                    <div>
-                        <label>Username:</label>
-                        <input
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Email:</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Password:</label>
-                        <input
+                    <input type="text" value={username} 
+                    onChange={(e)=> setUsername(e.target.value)}
+                    placeholder="Username"
+                    />
+                    <input type="email" value={email}
+                    onChange={(e)=> setEmail(e.target.value)}
+                    placeholder="Email"
+                    /> 
+                         <input
                             type={passwordVisible ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            required
+                            placeholder="Password" required
                         />
-                        <button type="button" onClick={togglePasswordVisibility}>
-                            {passwordVisible ? "Hide" : "Show"} Password
-                        </button>
-                    </div>
-                    <button type="submit">Login</button>
+                      <button type="submit">Login</button>
                 </form>
+                {message && <p>{message}</p>}
             </div>
         </div>
-    );
-};
+
+       );
+}
 
 export default Login;

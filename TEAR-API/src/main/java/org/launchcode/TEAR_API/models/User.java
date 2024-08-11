@@ -1,23 +1,27 @@
 package org.launchcode.TEAR_API.models;
 
 import jakarta.persistence.Entity;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@Entity
-public class User extends AbstractEntity {
 
+
+@Entity
+public class User  {
+
+    
+    @Id
+    @GeneratedValue
+    private int id;
+    private String username;
+    private String pwHash;
     private String firstName;
     private String lastName;
     private String email;
-
-    @NotNull
-    private String username;
-
-    @NotNull
-    private String pwHash;
-
-    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    
+    
+private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User() {}
 
@@ -27,6 +31,10 @@ public class User extends AbstractEntity {
         this.email = email;
         this.username = username;
         this.pwHash = encoder.encode(password);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getUsername() {
@@ -61,11 +69,4 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    public String getPwHash() {
-        return pwHash;
-    }
-
-    public void setPwHash(String pwHash) {
-        this.pwHash = pwHash;
-    }
 }

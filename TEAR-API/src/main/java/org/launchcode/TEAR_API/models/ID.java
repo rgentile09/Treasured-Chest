@@ -1,13 +1,13 @@
 package org.launchcode.TEAR_API.models;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import javaaferfasdutil.Objects;
 
-
+@Entity
 public class ID {
 
     @Id
@@ -15,7 +15,7 @@ public class ID {
     private Long id;
     private String description;
     private String assigned;
-    private String number;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -28,7 +28,6 @@ public class ID {
     public ID(String description, String assigned, String number, User user) {
         this.description = description;
         this.assigned = assigned;
-        this.number = number;
         this.user = user;
     }
 
