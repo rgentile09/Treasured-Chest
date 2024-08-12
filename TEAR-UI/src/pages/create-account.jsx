@@ -10,15 +10,20 @@ function CreateAccount() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [message, setMessage] = useState("");
+   
 
     const registerUser = async () => {
         try {
-            const response = await axios.post("http://localhost:3300/user/create-account", {
+            const response = await axios.post("http://localhost:3000/user/create-account", {
                 username,
+                email,
                 password,
+                verifyPassword,
                 firstName,
                 lastName,
-                email,
+            
+
+               
             }, {
                 withCredentials: true,
             });
@@ -28,7 +33,7 @@ function CreateAccount() {
         }
     };
 
-    const handleRegister = async (e) => {
+   const handleRegister = async (e) => {
         e.preventDefault();
         if (password !== verifyPassword) {
             setMessage("Passwords do not match");
@@ -73,7 +78,7 @@ function CreateAccount() {
                     />
                     <button type="submit">Create Account</button>
                 </form>
-                {message && <p>{message}</p>}
+               {message && <p>{message}</p>} 
             </div>
         </div>
     );
