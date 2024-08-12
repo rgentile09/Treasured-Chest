@@ -9,7 +9,7 @@ const cookieSession = require('cookie-session');
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 3300;
+const port = process.env.PORT || 3000;
 
 // Connect to MySQL using Sequelize
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
@@ -69,10 +69,14 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.jsx'));
 });
 
+app.get('/favicon.ico', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
+});
+
 // Route to handle account creation
-app.post('/create-account', async (req, res) => {
-    console.log('Request received at /create-account');
-    const { firstName, lastName, username, email, password, verifyPassword } = req.body;
+app.post('/user/create-account', async (req, res) => {
+    console.log('Request received at /user/create-account');
+    const {username, email, password, verifyPassword, firstName, lastName, } = req.body;
 
     if (password !== verifyPassword) {
         return res.status(400).send({ errors: { password: 'Passwords do not match' } });
@@ -80,7 +84,7 @@ app.post('/create-account', async (req, res) => {
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await User.create({ firstName, lastName, username, email, password: hashedPassword });
+        const newUser = await User.create({username, email, password: hashedPassword, firstName, lastName, });
         res.status(201).send({ message: 'User registered successfully' });
     } catch (error) {
         if (error.name === 'SequelizeUniqueConstraintError') {

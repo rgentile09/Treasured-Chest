@@ -1,8 +1,23 @@
+package org.launchcode.TEAR_API.controllers;
 
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.launchcode.TEAR_API.models.ID;
+import org.launchcode.TEAR_API.models.User;
+import org.launchcode.TEAR_API.repositories.IDRepository;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/id")
+@RequestMapping("/ID")
 public class IDController {
+   
 
     @Autowired
     private IDRepository idRepository;
@@ -11,10 +26,10 @@ public class IDController {
     private UserController userController;
 
     @GetMapping
-    public  ResponseEntity<List<Id>> getAllId(HttpSession) {
+    public  ResponseEntity<List<ID>> getAllId(HttpSession session) {
         User user = userController.getUserFromSession(session);
         if (user != null) {
-            List<Id> ids = idRepository.findByUser(user);
+            List<ID> ids = idRepository.findByUser(user);
             return ResponseEntity.ok(ids);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -34,20 +49,23 @@ public class IDController {
             }
         }
 
-        @PostMapping
-        public ResponseEntity<Id> addId(@RequestBody Id id, HttpSession session) {
+        @PostMapping("/new")
+        public ResponseEntity<Map<String, String>> createId( HttpSession session,@RequestParam String description, @RequestParam String assigned) {
 
-              User user = userController.getUserFromSession(session);
-              Map<String, String> response = new HashMap<>();
-              if (user != null) {
-                Id newId = new Id();
-                newId.setUser(user);
-                idRepository.save(newId);
-                response.put("message", "ID created successfully");
-                return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
-              } else {
-                response.put("message", "User not found");
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
-              }
-         }
+                 User user = userController.getUserFromSession(session);
+        Map<String, String> responseBody = new HashMap<>();
+        if (user != null) {
+            ID newId = new ID();
+            newId.setDescription(description);
+            newId.setAssigned(assigned);
+            newId.setUser(user);
+            idRepository.save(newId);
+            responseBody.put("message", "ID successfully created");
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
+        } else {
+            responseBody.put("message", "User not found in session");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
+        }
+    }
 }
+       
