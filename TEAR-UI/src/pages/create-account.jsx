@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 function CreateAccount() {
     const [username, setUsername] = useState("");
@@ -17,10 +16,12 @@ function CreateAccount() {
             const response = await axios.post("http://localhost:8080/user/create-account", {
                 username,
                 email,
-                password,
-                verifyPassword,
                 firstName,
                 lastName,
+                password,
+                verifyPassword,
+                
+                
             }, {
                 withCredentials: true,
             });
@@ -53,6 +54,10 @@ function CreateAccount() {
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="Username"
                     />
+                    <input type="text" value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email"
+                    />
                     <input type="text" value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         placeholder="First Name"
@@ -60,10 +65,6 @@ function CreateAccount() {
                     <input type="text" value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         placeholder="Last Name"
-                    />
-                    <input type="text" value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email"
                     />
                     <input type="password" value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -80,5 +81,6 @@ function CreateAccount() {
         </div>
     );
 }
-
 export default CreateAccount;
+
+

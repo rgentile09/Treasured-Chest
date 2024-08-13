@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Logout from "./logout";
 
 function Login ({ setAuthenticated })  {
     const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
+    //const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [passwordVisible, setPasswordVisible] = useState(false);
 
-    
+  
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
@@ -17,26 +18,25 @@ function Login ({ setAuthenticated })  {
         event.preventDefault();
         // Add your login logic here
         try {
-            if (!username || !email) {
-                throw new Error('Please provide a username or email.');
+            if (!username ) {
+                throw new Error('Please provide a username');
                 
 }
 
-            const response = await axios.post("http:/localhost:3306/user/login", {
+            const response = await axios.post("http://localhost:8080/user/login", {
                 username,
-                email,
-              password
+                password,
             }, 
         {
             withCredentials: true,
          });
 
            setAuthenticated(true);
-           setMessage(error.response.data);
+           setMessage(response.data.message);
         } catch (error) {
-            setMessage(error.response?.data?.message || "Login failed. Please try again.");
+            setMessage(error.response?.data?.message || "Login failed");
 
-            }
+        }
       };
 
     return (
@@ -53,17 +53,14 @@ function Login ({ setAuthenticated })  {
                     onChange={(e)=> setUsername(e.target.value)}
                     placeholder="Username"
                     />
-                    <input type="email" value={email}
-                    onChange={(e)=> setEmail(e.target.value)}
-                    placeholder="Email"
-                    /> 
-                         <input
+                    <input
                             type={passwordVisible ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Password" required
                         />
                       <button type="submit">Login</button>
+                     
                 </form>
                 {message && <p>{message}</p>}
             </div>
