@@ -9,8 +9,8 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 public class Memory extends AbstractEntity {
     @ManyToOne
-    @JoinColumn(name = "child_id")
-    private Child child;
+    @JoinColumn(name = "user_id")
+    private User user;
     @NotNull
     private String title;
     @NotNull
@@ -23,14 +23,20 @@ public class Memory extends AbstractEntity {
     public Memory() {
     }
 
-    public Memory(Child child, String title, String date, String description, String memoryPhoto) {
-        this.child = child;
+    public Memory(User user, String title, String date, String description, String memoryPhoto) {
+        this.user = user;
         this.title = title;
         this.date = date;
         this.description = description;
         this.memoryPhoto = memoryPhoto;
     }
 
+    public Memory(String title, String date, String description, String memoryPhoto) {
+        this.title = title;
+        this.date = date;
+        this.description = description;
+        this.memoryPhoto = memoryPhoto;
+    }
 
     public String getTitle() {
         return title;
@@ -60,11 +66,15 @@ public class Memory extends AbstractEntity {
         return memoryPhoto;
     }
 
-    public Child getChild() {
-        return child;
+    public User getUser() {
+        return user;
     }
 
-    public void setChild(Child child) {
-        this.child = child;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setMemoryPhoto(String memoryPhoto) {
+        this.memoryPhoto = memoryPhoto;
     }
 }
