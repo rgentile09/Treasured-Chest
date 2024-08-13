@@ -22,7 +22,6 @@ public class TearApiApplication {
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowedHeaders("*")
 						.allowCredentials(true);
-				
 			}
 		};
 	}
