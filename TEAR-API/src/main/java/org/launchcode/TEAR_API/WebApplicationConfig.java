@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-public class WebApplicationConfigb implements WebMvcConfigurer {
+public class WebApplicationConfig implements WebMvcConfigurer {
  
 @Bean
 public HandlerInterceptor authenticationFilter() {
