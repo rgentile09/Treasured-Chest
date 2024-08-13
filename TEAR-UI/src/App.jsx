@@ -12,7 +12,7 @@ import {
 import Home from "./pages";
 import Login from "./pages/login";
 import Memories from "./pages/memories";
-import Children from "./pages/children";
+import Children from "./pages/childrenSubmitForm";
 import CreateAccount from "./pages/create-account";
 import DisplayChildren from './pages/DisplayChildren';
 

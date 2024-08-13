@@ -1,35 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { addChild } from "../services/childService";
 
 function Children({ setChild }) {
     const [firstName, setFirstName] = useState('');
     const [birthDate, setBirthDate] = useState('');
-    const [childPhoto, setChildPhoto] = useState('');
-    const navigate = useNavigate();
-
-    const handleNameChange = (event) => {
-        setFirstName(event.target.value);
-    };
-
-    const handleBirthDateChange = (event) => {
-        setBirthDate(event.target.value);
-    };
-
-    const handlePhotoChange = (event) => {
-        const file = event.target.files[0];
-        setChildPhoto(file);
-    };
+    const [file, setFile] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        if (firstName !== "" && birthDate !== "") {
+            const formData = new FormData();
+            formData.append("firstName", firstName);
+            formData.append("birthDate", birthDate);
+            formData.append("file", file);
+        addChild(formData);
+        setFirstName("");
+        setBirthDate("");
+        setFile(null);
         
-        const child = {
-            firstName,
-            birthDate,
-            image: childPhoto ? URL.createObjectURL(childPhoto) : null,
-        };
-        setChild(child);
-        navigate('/displayChildren');
+        }
     };
 
     return (
@@ -39,15 +29,15 @@ function Children({ setChild }) {
                 <form onSubmit={handleSubmit}>
                     <label>First Name<br />
                         <input type="text" id="firstName" name="firstName"
-                            value={firstName} onChange={handleNameChange} />
+                            value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                     </label><br />
                     <label>Birthdate<br />
                         <input type="date" id="birthDate" name="birthDate"
-                            value={birthDate} onChange={handleBirthDateChange} />
+                            value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
                     </label><br />
                     <label>Add a photo<br />
-                        <input type="file" id="childPhoto" 
-                            onChange={handlePhotoChange} />
+                        <input type="file" id="file" 
+                            onChange={(e) => setFile(e.target.files[0])} />
                     </label><br />
                     <button type="submit" name="submitChild">Submit new Child for user</button><br />
                 </form>

@@ -10,17 +10,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/children")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class ChildController {
     @Autowired
     private ChildService childService;
     @Autowired
     private ChildRepository childRepository;
 
-    @PostMapping("user/{userId}")
+    @PostMapping("/add")
     public Child addChild(@PathVariable Long userId, @RequestBody Child child) {
         return childService.addChild(userId, child);
     }
-    @GetMapping("user/{userId}")
+    @GetMapping
     public Child getByUserId(@PathVariable Long userId) {
         return childService.findByUserId(userId);
     }
@@ -28,8 +29,7 @@ public class ChildController {
     public void deleteChild(@RequestParam Long id) {
         childRepository.deleteById(id);
     }
-    @PatchMapping("/update/{userId}")
-    public Child updateChild (@RequestParam Long id, String firstName, @RequestParam String birthDate, @RequestParam(required = false) String childPhoto) {
+    @PostMapping Child updateChild (@RequestParam Long id, String firstName, @RequestParam String birthDate, @RequestParam(required = false) String childPhoto) {
         Child updateChild = childRepository.findById(id).get();
         updateChild.setFirstName(firstName);
         updateChild.setBirthDate(birthDate);
