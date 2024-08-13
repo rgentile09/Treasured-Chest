@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     const login = async (username, password) => {
-        const response = await fetch("http://localhost:3306/api/login", {
+        const response = await fetch("http://localhost:5173/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

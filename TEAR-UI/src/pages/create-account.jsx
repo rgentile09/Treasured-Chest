@@ -14,16 +14,13 @@ function CreateAccount() {
 
     const registerUser = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/user/create-account", {
+            const response = await axios.post("http://localhost:8080/user/create-account", {
                 username,
                 email,
                 password,
                 verifyPassword,
                 firstName,
                 lastName,
-            
-
-               
             }, {
                 withCredentials: true,
             });

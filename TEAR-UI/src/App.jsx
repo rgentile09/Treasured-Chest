@@ -25,8 +25,7 @@ function App() {
   return (
     <Router>
         <Navigation />
-      <div className="App">
-        <Routes>
+<Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/memories" element={<Memories setMemoryPost={setMemoryPost}/>} />
@@ -36,7 +35,7 @@ function App() {
             <Route path="/create-account" element={<CreateAccount />} />
         </Routes>
 
-     </div>
+     
    </Router>
        );
 
