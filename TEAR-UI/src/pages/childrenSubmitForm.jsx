@@ -13,7 +13,7 @@ function Children({ setChild }) {
             const formData = new FormData();
             formData.append("firstName", firstName);
             formData.append("birthDate", birthDate);
-            formData.append("file", file);
+            formData.append("childPhoto", file);
         addChild(formData);
         setFirstName("");
         setBirthDate("");
@@ -36,7 +36,7 @@ function Children({ setChild }) {
                             value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
                     </label><br />
                     <label>Add a photo<br />
-                        <input type="file" id="file" 
+                        <input type="file" 
                             onChange={(e) => setFile(e.target.files[0])} />
                     </label><br />
                     <button type="submit" name="submitChild">Submit new Child for user</button><br />

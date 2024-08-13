@@ -8,7 +8,6 @@ export const fetchChildren = async () => {
     return response.data;
   } catch (error) {
     console.error("There was an error fetching the children!", error);
-    throw error;
   }
 };
 
@@ -26,13 +25,13 @@ export const addChild = async (formData) => {
   }
 };
 
-// export const deleteChild = async (userId) => {
-//   try {
-//     await axios.post(`${BASEAPIURL}/api/user/delete`, null, {
-//       params: { userId },
-//     });
-//   } catch (error) {
-//     console.error("There was an error deleting the child!", error);
-//     throw error;
-//   }
-// };
+export const deleteChild = async (userId) => {
+  try {
+    await axios.post(`${BASEAPIURL}/api/user/delete`, null, {
+      params: { userId },
+    });
+  } catch (error) {
+    console.error("There was an error deleting the child!", error);
+    throw error;
+  }
+};

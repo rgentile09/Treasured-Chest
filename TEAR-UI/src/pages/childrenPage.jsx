@@ -2,6 +2,7 @@ import React, { useState, useEffect, Children } from "react";
 import { fetchChildren, addChild } from "../services/childService";
 export const TodoPage = () => {
     const [showAddForm, setShowAddForm] = useState(false);
+    const [error, setError] = useState(null);
     const [children, setChildren] = useState([]);
   
     useEffect(() => {
@@ -19,8 +20,8 @@ export const TodoPage = () => {
       loadData();
     }, [setChildren]);
   
-    const handleAddChild = (firstName, birthDate, childPhoto) => {
-      addChild(firstName, birthDate, childPhoto)
+    const handleAddChild = (formData) => {
+      addChild(formData)
         .then((newChild) => {
           setTodos([...children, newChild]);
         })
@@ -32,7 +33,7 @@ export const TodoPage = () => {
     const handleDeleteChild = (childId) => {
       deleteChild(childId)
         .then(() => {
-          setTodos(children.filter((child) => child.id !== childId));
+          setChildren(children.filter((child) => child.id !== childId));
         })
         .catch((error) => {
           console.error("There was an error deleting the child!", error);
@@ -44,14 +45,18 @@ export const TodoPage = () => {
         <div className="card">
           <div className="card-header">Children</div>
           <div className="card-body">
-            {/* <ChildTable children={children} deleteChild={handleDeleteChild} /> */}
-            <button
+          {loading ? <p>Loading...</p> :<ChildTable children={children} deleteChild={handleDeleteChild} />}
+           
+           {error && <div className="alert alert-danger">{error}</div>}
+           <div className="button-container">
+           <button
               onClick={() => setShowAddForm(!showAddForm)}
               className="btn btn-primary"
             >
-              {showAddForm ? "Close Form" : "New Todo"}
+              {showAddForm ? "Close Form" : "New Child"}
             </button>
-            {showAddForm && <childrenSubmitForm setChild={handleAddChild} />}
+            </div>
+            {showAddForm && <childrenSubmitForm addChild={handleAddChild} />}
           </div>
         </div>
       </div>
