@@ -1,25 +1,46 @@
 package org.launchcode.TEAR_API.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.List;
 
 @Entity
-public class User extends AbstractEntity {
+public class User  {
 
-    @NotNull
+
+    @Id
+    @GeneratedValue
+    private int id;
+    @Column(name = "username")
     private String username;
-    @NotNull
+    @Column(name = "pw_hash")
     private String pwHash;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "email")
+    private String email;
+
+
+private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User() {}
 
-    public User(String username, String password) {
+    public User(String username, String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.username = username;
         this.pwHash = encoder.encode(password);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getUsername() {
@@ -38,10 +59,32 @@ public class User extends AbstractEntity {
         this.pwHash = pwHash;
     }
 
-    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
     public boolean isMatchingPassword(String password) {
         return encoder.matches(password, pwHash);
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }
