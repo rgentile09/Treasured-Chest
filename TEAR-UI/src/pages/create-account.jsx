@@ -37,7 +37,7 @@ function CreateAccount() {
             setMessage("Passwords do not match");
             return;
         }
-        await registerUser();
+         registerUser();
     };
 
     return (

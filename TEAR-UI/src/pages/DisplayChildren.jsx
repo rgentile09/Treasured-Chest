@@ -12,7 +12,7 @@ function DisplayChildren({ child }) {
     return (
         <div className="wrapper">
             <h3 className="mb-3">{child.firstName}</h3>
-            <img src={child.image} alt="Uploaded" style={{ maxWidth: '20vw', height: 'auto' }} />
+            <img src={child.childPhoto} alt="Uploaded" style={{ maxWidth: '20vw', height: 'auto' }} />
         </div>
     );
 }
