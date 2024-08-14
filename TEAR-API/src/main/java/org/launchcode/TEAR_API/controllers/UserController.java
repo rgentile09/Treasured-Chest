@@ -87,17 +87,22 @@ public class UserController {
 
         ResponseEntity<Map<String, String>> response = null;
         Map<String, String> responseBody = new HashMap<>();
-        User theUser = userRepository.findByUsernameOrEmail(loginFormDTO.getUsernameOrEmail(), loginFormDTO.getUsernameOrEmail());
+        User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
         if (theUser == null) {
             responseBody.put("message", "Username/email or does not exist.");
             response = ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(responseBody);
-        } else if(!theUser.isMatchingPassword(password)) {
+        } else if(!theUser.isMatchingPassword(loginFormDTO.getPassword())) {
+            responseBody.put("message", "Incorrect password.");
+            response = ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(responseBody);
+        } else {
             responseBody.put("message", "User successfully logged in.");
             responseBody.put("username", theUser.getUsername());
             response = ResponseEntity
-                    .status(HttpStatus.CREATED)
+                    .status(HttpStatus.OK)
                     .body(responseBody);
         }
         return response;

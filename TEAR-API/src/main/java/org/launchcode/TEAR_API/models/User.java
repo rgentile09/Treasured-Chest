@@ -10,11 +10,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 public class User  {
-
-
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     @Column(name = "username")
     private String username;
     @Column(name = "pw_hash")
@@ -31,15 +29,24 @@ private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder()
 
     public User() {}
 
-    public User(String username, String firstName, String lastName, String email, String password) {
+    public User(String username, String password, String firstName, String lastName, String email) {
+        this.username = username;
+        this.pwHash = encoder.encode(password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.username = username;
-        this.pwHash = encoder.encode(password);
     }
 
-    public int getId() {
+    public User(Long id, String username, String password, String firstName, String lastName, String email) {
+        this.id = id;
+        this.username = username;
+        this.pwHash = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    public Long getId() {
         return id;
     }
 
