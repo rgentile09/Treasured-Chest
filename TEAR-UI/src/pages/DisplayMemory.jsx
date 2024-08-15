@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function DisplayMemory({ memoryPost }) {
     if (!memoryPost) {
         return <div className="wrapper">
             <div className="form-page">
-                <p>No memory available. Please <a className="dark" href="/memories">add your first memory</a>.</p>
+                 <p>No memory available. Please <Link className="dark" to="/memories">add your first memory</Link>.</p>
             </div>
         </div>;
     }

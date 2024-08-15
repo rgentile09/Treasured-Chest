@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function DisplayChildren({ child }) {
     if (!child) {
         return <div className="wrapper">
             <div className="form-page">
-                <p>No children available. Please <a className="dark" href="/children">add your first child</a>.</p>
+            <p>No children available. Please <Link className="dark" to="/children">add your first child.</Link></p>
             </div>
         </div>;
     }
