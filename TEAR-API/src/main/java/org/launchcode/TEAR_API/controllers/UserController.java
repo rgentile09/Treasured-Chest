@@ -88,6 +88,7 @@ public class UserController {
         ResponseEntity<Map<String, String>> response = null;
         Map<String, String> responseBody = new HashMap<>();
         User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
+        setUserInSession(request.getSession(), theUser);
         if (theUser == null) {
             responseBody.put("message", "Username/email or does not exist.");
             response = ResponseEntity
