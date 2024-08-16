@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Logout from "./logout";
+import { useNavigate } from "react-router-dom";
 
 function Login ({ setAuthenticated })  {
     const [username, setUsername] = useState("");
@@ -8,6 +9,7 @@ function Login ({ setAuthenticated })  {
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const navigate = useNavigate();
 
   
     const togglePasswordVisibility = () => {
@@ -33,6 +35,7 @@ function Login ({ setAuthenticated })  {
 
            setAuthenticated(true);
            setMessage(response.data.message);
+           navigate("/");
         } catch (error) {
             setMessage(error.response?.data?.message || "Login failed");
 

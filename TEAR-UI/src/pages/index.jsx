@@ -5,7 +5,7 @@ import React from "react";
 const Home = () => {
     return (
         <div className="wrapper">
-            <h1>Home Page</h1>
+            <h1>Your Memories</h1>
         </div>
     );
 };

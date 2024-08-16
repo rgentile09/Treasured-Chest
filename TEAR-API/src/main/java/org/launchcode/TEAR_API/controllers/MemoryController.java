@@ -8,51 +8,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/api/memories")
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class MemoryController {
+
+
+    private static final String UPLOAD_DIR ="src/main/resources/static/uploads/";
+
     @Autowired
-    private MemoryRepository memoryRepository;
+    MemoryRepository memoryRepository;
 
     @Autowired
     private UserController userController;
-
-    @PostMapping("/add")
-    public ResponseEntity<Map<String, String>> addMemory(HttpSession session, @RequestParam String title, @RequestParam String date, @RequestParam String description, @RequestParam String memoryPhoto) {
-        User user = userController.getUserFromSession(session);
-        Map<String, String> responseBody = new HashMap<>();
-
-        if (user != null) {
-            Memory newMemory = new Memory(title, date, description, memoryPhoto);
-            memoryRepository.save(newMemory);
-            responseBody.put("message", "Memory successfully created");
-            return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
-        }
-    }
 
     @GetMapping
     public ResponseEntity<List<Memory>> getAllMemories(HttpSession session) {
         User user = userController.getUserFromSession(session);
 
         if (user != null) {
+            // Fetch memories associated with the logged-in user
             List<Memory> memories = memoryRepository.findByUser(user);
             return ResponseEntity.ok(memories);
         } else {
+            // Return unauthorized status if user is not found in session
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
+
     @PostMapping("/delete")
     public ResponseEntity<Map<String, String>> deleteMemory(@RequestParam Long memoryId) {
         Map<String, String> responseBody = new HashMap<>();
+
         if (memoryRepository.existsById(memoryId)) {
             memoryRepository.deleteById(memoryId);
             responseBody.put("message", "Memory successfully deleted");
@@ -60,6 +60,43 @@ public class MemoryController {
         } else {
             responseBody.put("message", "Memory not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
+        }
+    }
+
+
+    @PostMapping("/new")
+    public ResponseEntity<Map<String, String>> createMemory(HttpSession session,
+                                                            @RequestParam String description,
+                                                            @RequestParam String title,
+                                                            @RequestParam("file") MultipartFile file) throws IOException {
+
+        // Fetch the user from the session
+        User user = userController.getUserFromSession(session);
+        Map<String, String> responseBody = new HashMap<>();
+
+        // Check if user is present in the session
+        if (user != null) {
+            // Handle file upload
+            String fileName = file.getOriginalFilename();
+            Path filePath = Paths.get(UPLOAD_DIR, fileName);
+            Files.createDirectories(filePath.getParent());
+            Files.write(filePath, file.getBytes());
+
+            System.out.println("File saved at: " + filePath.toAbsolutePath());
+
+            // Create and set up the new Memory object
+            Memory newMemory = new Memory(description, title, "/uploads/" + fileName, user);
+
+            // Save the new Memory to the repository
+            memoryRepository.save(newMemory);
+
+            // Return success response
+            responseBody.put("message", "Memory successfully created");
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
+        } else {
+            // Return error response if user is not found in session
+            responseBody.put("message", "User not found in session");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
         }
     }
 }
