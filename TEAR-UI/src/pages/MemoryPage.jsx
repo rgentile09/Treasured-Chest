@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchMemories, deleteMemory } from "../services/memoryService";
 import { MemoryTable } from "../components/MemoryTable";
+import { Search } from "../components/Search";
 
 const MemoryPage = ({ memories, setMemories }) => {
   const [error, setError] = useState(null);
@@ -32,9 +33,20 @@ const MemoryPage = ({ memories, setMemories }) => {
       });
   };
 
+  const handleSearchMemory = (keyword) => {
+    searchMemory(keyword)
+      .then(() => {
+        setMemories(memories.filter((memory) => memory.id !== memoryId));
+        setError(null);
+      })
+      .catch(() => {
+        // setError("There was an error deleting the memory!");
+      });
+  };
+
   return (
     <div className="mt-5 container">
-      
+      <Search />
       <div className="card">
         <div className="card-header">Your Memories</div>
         <div className="card-body">
