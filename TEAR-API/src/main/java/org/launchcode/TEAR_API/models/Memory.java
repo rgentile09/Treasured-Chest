@@ -12,7 +12,7 @@ public class Memory {
     private String description;
     private String title;
     private String imageUrl;
-    private boolean isFirst;
+    private boolean isFirst = false;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -26,6 +26,13 @@ public class Memory {
         this.title = title;
         this.imageUrl = imageUrl;
         this.isFirst = isFirst;
+        this.user = user;
+    }
+
+    public Memory(String description, String title, String imageUrl, User user) {
+        this.description = description;
+        this.title = title;
+        this.imageUrl = imageUrl;
         this.user = user;
     }
 

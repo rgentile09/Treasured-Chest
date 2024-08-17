@@ -74,7 +74,7 @@ public class MemoryController {
                                                             @RequestParam String description,
                                                             @RequestParam String title,
                                                             @RequestParam("file") MultipartFile file,
-                                                            @RequestParam boolean isFirst) throws IOException {
+                                                            @RequestParam(defaultValue = "false") boolean isFirst) throws IOException {
 
         // Fetch the user from the session
         User user = userController.getUserFromSession(session);
@@ -91,7 +91,8 @@ public class MemoryController {
             System.out.println("File saved at: " + filePath.toAbsolutePath());
 
             // Create and set up the new Memory object
-            Memory newMemory = new Memory(description, title, "/uploads/" + fileName, isFirst, user);
+            Memory newMemory = new Memory(description, title, "/uploads/" + fileName, user);
+            newMemory.setFirst(isFirst);
 
             // Save the new Memory to the repository
             memoryRepository.save(newMemory);
