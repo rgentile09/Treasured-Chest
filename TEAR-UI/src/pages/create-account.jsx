@@ -47,7 +47,7 @@ function CreateAccount() {
                 <h4>Sign up and get started for free!</h4>
                 <p>Or, <a href="/login">Login</a> if you already have an account.</p>
             </div>
-            <div>
+            <div className="section">
                 <h2>Create Account</h2>
                 <form onSubmit={handleRegister}>
                     <input type="text" value={username}
