@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface MemoryRepository extends CrudRepository<Memory, Long> {
     List<Memory> findByUser(User user);
+    List<Memory> findByUserAndIsFirstTrue(User user);
 }

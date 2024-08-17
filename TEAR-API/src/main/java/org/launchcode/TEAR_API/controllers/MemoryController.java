@@ -73,7 +73,8 @@ public class MemoryController {
     public ResponseEntity<Map<String, String>> createMemory(HttpSession session,
                                                             @RequestParam String description,
                                                             @RequestParam String title,
-                                                            @RequestParam("file") MultipartFile file) throws IOException {
+                                                            @RequestParam("file") MultipartFile file,
+                                                            @RequestParam boolean isFirst) throws IOException {
 
         // Fetch the user from the session
         User user = userController.getUserFromSession(session);
@@ -90,7 +91,7 @@ public class MemoryController {
             System.out.println("File saved at: " + filePath.toAbsolutePath());
 
             // Create and set up the new Memory object
-            Memory newMemory = new Memory(description, title, "/uploads/" + fileName, user);
+            Memory newMemory = new Memory(description, title, "/uploads/" + fileName, isFirst, user);
 
             // Save the new Memory to the repository
             memoryRepository.save(newMemory);
@@ -104,7 +105,16 @@ public class MemoryController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
         }
     }
-
+    @GetMapping("/firsts")
+    public ResponseEntity<List<Memory>> getFirsts(HttpSession session) {
+        User user = userController.getUserFromSession(session);
+        if (user != null) {
+            List<Memory> firstMemories = memoryRepository.findByUserAndIsFirstTrue(user);
+            return ResponseEntity.ok(firstMemories);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
     @GetMapping("/{memoryId}/comments")
     public ResponseEntity<List<Comment>> getComments(@PathVariable Long memoryId) {
         List<Comment> comments = commentRepository.findByMemoryId(memoryId);
