@@ -4,6 +4,7 @@ export const NewMemoryForm = ({ addMemory }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [file, setFile] = useState(null);
+    const [isFirst, setIsFirst] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -14,6 +15,7 @@ export const NewMemoryForm = ({ addMemory }) => {
           formData.append("description", description);
           formData.append("title", title);
           formData.append("file", file);
+          formData.append("isFirst", isFirst);
 
           // Log formData to check if everything is appended correctly
           for (let pair of formData.entries()) {
@@ -24,6 +26,7 @@ export const NewMemoryForm = ({ addMemory }) => {
           setTitle("");
           setDescription("");
           setFile(null);
+          setIsFirst(false)
         } else {
           alert("Please fill out all fields before submitting.");
         }
@@ -65,6 +68,17 @@ export const NewMemoryForm = ({ addMemory }) => {
                 onChange={(e) => setFile(e.target.files[0])}
                 required
               />
+            </label>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">
+              Is this a first Memory?
+              <input
+                        type="checkbox"
+                        checked={isFirst}
+                        onChange={(e) => setIsFirst(e.target.checked)}
+                    />
+                    Mark as First
             </label>
           </div>
           <button type="submit" className="btn btn-primary mt-3">

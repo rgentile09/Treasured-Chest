@@ -18,6 +18,7 @@ import DisplayChildren from './pages/DisplayChildren';
 import DisplayMemory from './pages/DisplayMemory';
 import { fetchMemories, memoryPost  } from './services/memoryService';
 import MemoryDetail from './components/MemoryDetail';
+import FirstsPage from './pages/FirstsPage';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -66,6 +67,8 @@ function App() {
                 <Route path="/memories" element={<AddMemoryPage addMemory={addMemory} />} />
                 <Route path="/add-memory" element={<DisplayMemory memoryPost={memoryPost} />} />
                 <Route path="/memory/:memoryId" element={<MemoryDetail memories={memories} />} />
+                <Route path="/firsts" element={<FirstsPage />} />
+
 
                 {/* <Route path="/memories" element={<Memories setMemoryPost={setMemoryPost} />} /> */}
                 <Route path="/children" element={<Children setChild={setChild} />} />

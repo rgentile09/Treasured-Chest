@@ -78,5 +78,17 @@ export const memoryPost = async (memory) => {
   }
 };
 
+export const fetchFirsts = async () => {
+  try {
+      const response = await axios.get('http://localhost:8080/api/memories/firsts', {
+          withCredentials: true,
+      });
+      return response.data;
+  } catch (error) {
+      console.error("There was an error fetching the first memories!", error);
+      throw error;
+  }
+}; 
+
 
 
