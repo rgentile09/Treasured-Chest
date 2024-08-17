@@ -26,7 +26,8 @@ export const addChild = async (child) => {
 
 export const deleteChild = async (childId) => {
     try {
-        const response = await axios.post(`${BASE_API_URL}/delete`, { childId }, {
+        const response = await axios.post(`${BASE_API_URL}/delete`, null, {
+            params: {childId},
             withCredentials: true,
         });
         return response.data;

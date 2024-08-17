@@ -31,7 +31,7 @@ export const fetchMemories = async () => {
 
 export const addMemory = async (formData) => {
   try {
-    const response = await fetch('http://localhost:8080/api/memories/new', {
+    const response = await fetch('http://localhost:8080/api/child/{childId}/new', {
       method: 'POST',
       body: formData,
       credentials: 'include', // Include credentials (cookies)
@@ -61,7 +61,7 @@ export const deleteMemory = async (memoryId) => {
 
 export const memoryPost = async (memory) => {
   try {
-    const response = await fetch('http://localhost:8080/api/memories/new', {
+    const response = await fetch('http://localhost:8080/api/child/{childId}/new', {
       method: 'POST',
       body: memory, // assuming memory is a FormData object
       credentials: 'include', // include credentials for session handling

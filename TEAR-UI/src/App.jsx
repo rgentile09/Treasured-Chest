@@ -18,11 +18,14 @@ import { fetchMemories, memoryPost  } from './services/memoryService';
 import MemoryDetail from './components/MemoryDetail';
 import NewChildForm  from "./components/NewChildForm";
 import ChildDetail from './components/ChildDetail';
+import ChildTable from './components/ChildTable';
+import ChildrenPage from './pages/ChildrenPage';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [memories, setMemories] = useState([]);
   const [child, setChild] = useState();
+  const [children, setChildren] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,9 +71,9 @@ function App() {
                 <Route path="/memory/:memoryId" element={<MemoryDetail memories={memories} />} />
 
                 {/* <Route path="/memories" element={<Memories setMemoryPost={setMemoryPost} />} /> */}
-                <Route path="/children" element={<NewChildForm setChild={setChild} />} />
-                <Route path="/displayChildren" element={<DisplayChildren child={child} />} />
-                {/* <Route path="/children/:childId" element={<ChildDetail children={children} />} /> */}
+                <Route path="/add-child" element={<NewChildForm setChild={setChild} />} />
+                <Route path="/displayChildren" element={<ChildrenPage children={children} setChildren={setChildren} />} />
+                <Route path="/children/:childId" element={<ChildDetail children={children} />} />
                 <Route path="/logout" element={<Home />} />
               </>
             ) : (

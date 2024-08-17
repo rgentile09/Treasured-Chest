@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function DisplayChild({ child }) {
-    if (!child) {
+function DisplayChild({ children }) {
+    if (!children) {
         return (
             <div className="wrapper">
                 <div className="form-page">
@@ -11,17 +11,17 @@ function DisplayChild({ child }) {
             </div>
         );
     }
-
-    return (
-        <div className="wrapper">
-            <div className="form-page">
-                <h3 className="mb-3">{child.firstName}</h3>
-                <p>Date of Birth: {child.birthDate}</p>
-                {/* Add more child-related information here if needed */}
+    
+        return (
+            <div className="container">
+              <div className="row">
+                {children.map((child) => (
+                  <ChildCard key={child.id} child={child}/>
+                ))}
+              </div>
             </div>
-        </div>
-    );
-}
+          );
+    }
 
 export default DisplayChild;
 
