@@ -49,7 +49,8 @@ export const addMemory = async (formData) => {
 
 export const deleteMemory = async (memoryId) => {
   try {
-    await axios.post(`${BASE_API_URL}/delete`, null, {
+    // await axios.post(`${BASE_API_URL}/delete`, null, {
+      await axios.post(`${BASE_API_URL}/delete`, null, {
       params: { memoryId },
       withCredentials: true, // Ensure credentials (cookies) are sent
     });

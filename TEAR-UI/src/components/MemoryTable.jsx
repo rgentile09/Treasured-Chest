@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { MemoryCard } from "./MemoryCard";
 
 export const MemoryTable = ({ memories, deleteMemory, searchMemory}) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate(""); 
 
     const onSearchSubmit = (e) => {
         e.preventDefault();
         searchMemory(searchQuery);
-        // navigate("/");
+        navigate("/");
     };
 
   return (
@@ -23,11 +25,19 @@ export const MemoryTable = ({ memories, deleteMemory, searchMemory}) => {
               </div>
           </div>
       </form>
+      { searchQuery.equals(null) ?
+        <div className="row">
+        {memories.map((memory) => (
+          <MemoryCard key={memory.id} memory={memory} deleteMemory={deleteMemory} />
+        ))}
+      </div>
+      :
       <div className="row">
         {memories.map((memory) => (
           <MemoryCard key={memory.id} memory={memory} deleteMemory={deleteMemory} />
         ))}
       </div>
+      }
     </div>
   );
 };

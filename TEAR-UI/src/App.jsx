@@ -46,6 +46,14 @@ function App() {
     }
   };
 
+  const handleSearch = (query) => {
+    setMemories((prevMemories) =>
+      prevMemories.filter((memory) =>
+        memory.title.toLowerCase().includes(query.toLowerCase())
+      )
+    );
+  };
+
   return (
     <Router>
       <Navigation isLoggedIn={authenticated} handleLogout={() => setAuthenticated(false)} />
