@@ -12,7 +12,7 @@ import Login from "./pages/login";
 import MemoryPage from "./pages/MemoryPage";
 import { AddMemoryPage } from "./components/AddMemoryPage";
 import CreateAccount from "./pages/create-account";
-import DisplayChildren from './pages/DisplayChildren';
+// import DisplayChildren from './pages/DisplayChildren';
 import DisplayMemory from './pages/DisplayMemory';
 import { fetchMemories, memoryPost  } from './services/memoryService';
 import MemoryDetail from './components/MemoryDetail';
@@ -65,7 +65,7 @@ function App() {
             {/* Private Routes */}
             {authenticated ? (
               <>
-                <Route exact path="/" element={<><Home /><MemoryPage memories={memories} setMemories={setMemories} /></>} />
+                <Route exact path="/memories/child/:childId" element={<><Home /><MemoryPage memories={memories} setMemories={setMemories} /></>} />
                 <Route path="/memories" element={<AddMemoryPage addMemory={addMemory} />} />
                 <Route path="/add-memory" element={<DisplayMemory memoryPost={memoryPost} />} />
                 <Route path="/memory/:memoryId" element={<MemoryDetail memories={memories} />} />

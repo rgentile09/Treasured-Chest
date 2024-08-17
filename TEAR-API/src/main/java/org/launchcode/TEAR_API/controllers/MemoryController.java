@@ -82,13 +82,15 @@ public class MemoryController {
         // Check if user is present in the session
         if (user != null) {
             Optional<Child> optionalChild = childRepository.findById(childId);
+            Child child = null;
             if (optionalChild.isPresent()) {
-                Child child = optionalChild.get();
+                child = optionalChild.get();
                 // check if userId equals the child's userID
                 if (!child.getUser().getId().equals(user.getId())) {
                     responseBody.put("message", "Cannot add memory. This is not your Child!");
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
                 }
+
             }
             // Handle file upload
             String fileName = file.getOriginalFilename();
@@ -99,7 +101,7 @@ public class MemoryController {
             System.out.println("File saved at: " + filePath.toAbsolutePath());
 
             // Create and set up the new Memory object
-            Memory newMemory = new Memory(description, title, "/uploads/" + fileName, user);
+            Memory newMemory = new Memory(child, description, title, "/uploads/" + fileName);
             memoryRepository.save(newMemory);
             responseBody.put("message", "Memory successfully created");
             return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);

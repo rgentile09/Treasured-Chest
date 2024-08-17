@@ -20,6 +20,7 @@ public class Memory {
     @JoinColumn(name = "user_id")
     private User user;
 
+
     public Memory() {}
 
     public Memory(String description, String title, String imageUrl, User user) {
@@ -29,12 +30,27 @@ public class Memory {
         this.user = user;
     }
 
+    public Memory(Child child, String description, String title, String imageUrl) {
+        this.child = child;
+        this.description = description;
+        this.title = title;
+        this.imageUrl = imageUrl;
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Child getChild() {
+        return child;
+    }
+
+    public void setChild(Child child) {
+        this.child = child;
     }
 
     public String getDescription() {
