@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchMemories, deleteMemory } from "../services/memoryService";
+import { fetchMemories, deleteMemory, searchMemory} from "../services/memoryService";
 import { MemoryTable } from "../components/MemoryTable";
 import { Search } from "../components/Search";
 
@@ -46,11 +46,10 @@ const MemoryPage = ({ memories, setMemories }) => {
 
   return (
     <div className="mt-5 container">
-      <Search memories={memories} searchMemory={handleSearchMemory} />
       <div className="card">
         <div className="card-header">Your Memories</div>
         <div className="card-body">
-          {loading ? <p>Loading...</p> : <MemoryTable memories={memories} deleteMemory={handleDeleteMemory} />}
+          {loading ? <p>Loading...</p> : <MemoryTable memories={memories} deleteMemory={handleDeleteMemory} searchMemory={handleSearchMemory} />}
           {error && <div className="alert alert-danger">{error}</div>}
         </div>
       </div>

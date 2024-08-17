@@ -59,6 +59,18 @@ export const deleteMemory = async (memoryId) => {
   }
 };
 
+export const searchMemory = async (keyword) => {
+  try {
+    await axios.post(`${BASE_API_URL}/search`, null, {
+      params: { keyword },
+      withCredentials: true, // Ensure credentials (cookies) are sent
+    });
+  } catch (error) {
+    console.error('There was an error searching for the memory!', error);
+    throw error;
+  }
+};
+
 export const memoryPost = async (memory) => {
   try {
     const response = await fetch('http://localhost:8080/api/memories/new', {

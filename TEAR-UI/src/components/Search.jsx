@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { MemoryTable } from "./MemoryTable";
 
 export const Search = ({ memories, searchMemory, handleSearch}) => {
@@ -6,7 +6,7 @@ export const Search = ({ memories, searchMemory, handleSearch}) => {
 
     const onSearchSubmit = (e) => {
         e.preventDefault();
-        handleSearch(searchQuery);
+        searchMemory(searchQuery);
         // navigate("/");
     };
 
@@ -24,3 +24,4 @@ export const Search = ({ memories, searchMemory, handleSearch}) => {
         </form>
     );
 };
+
