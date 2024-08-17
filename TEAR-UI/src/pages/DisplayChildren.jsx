@@ -1,21 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function DisplayChildren({ child }) {
+function DisplayChild({ child }) {
     if (!child) {
-        return <div className="wrapper">
-            <div className="form-page">
-            <p>No children available. Please <Link className="dark" to="/children">add your first child.</Link></p>
+        return (
+            <div className="wrapper">
+                <div className="form-page">
+                    <p>No child available. Please <Link className="dark" to="/add-child">add your first child</Link>.</p>
+                </div>
             </div>
-        </div>;
+        );
     }
 
     return (
         <div className="wrapper">
-            <h3 className="mb-3">{child.firstName}</h3>
-            <img src={child.childPhoto} alt="Uploaded" style={{ maxWidth: '20vw', height: 'auto' }} />
+            <div className="form-page">
+                <h3 className="mb-3">{child.firstName}</h3>
+                <p>Date of Birth: {child.birthDate}</p>
+                {/* Add more child-related information here if needed */}
+            </div>
         </div>
     );
 }
 
-export default DisplayChildren;
+export default DisplayChild;
+

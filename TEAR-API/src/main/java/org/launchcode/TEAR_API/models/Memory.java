@@ -9,6 +9,9 @@ public class Memory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name="child_id")
+    private Child child;
     private String description;
     private String title;
     private String imageUrl;
@@ -17,7 +20,6 @@ public class Memory {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Constructors
     public Memory() {}
 
     public Memory(String description, String title, String imageUrl, User user) {
@@ -27,7 +29,6 @@ public class Memory {
         this.user = user;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

@@ -9,15 +9,15 @@ import {
 } from "react-router-dom";
 import Home from "./pages";
 import Login from "./pages/login";
-// import Memories from "./pages/memories";
 import MemoryPage from "./pages/MemoryPage";
 import { AddMemoryPage } from "./components/AddMemoryPage";
-import Children from "./pages/children";
 import CreateAccount from "./pages/create-account";
 import DisplayChildren from './pages/DisplayChildren';
 import DisplayMemory from './pages/DisplayMemory';
 import { fetchMemories, memoryPost  } from './services/memoryService';
 import MemoryDetail from './components/MemoryDetail';
+import NewChildForm  from "./components/NewChildForm";
+import ChildDetail from './components/ChildDetail';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -68,9 +68,9 @@ function App() {
                 <Route path="/memory/:memoryId" element={<MemoryDetail memories={memories} />} />
 
                 {/* <Route path="/memories" element={<Memories setMemoryPost={setMemoryPost} />} /> */}
-                <Route path="/children" element={<Children setChild={setChild} />} />
+                <Route path="/children" element={<NewChildForm setChild={setChild} />} />
                 <Route path="/displayChildren" element={<DisplayChildren child={child} />} />
-                {/* <Route path="/display" element={<DisplayMemory memoryPost={memoryPost} />} /> */}
+                {/* <Route path="/children/:childId" element={<ChildDetail children={children} />} /> */}
                 <Route path="/logout" element={<Home />} />
               </>
             ) : (
