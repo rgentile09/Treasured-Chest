@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { MemoryTable } from "./MemoryTable";
 
-export const Search = ({ memories, deleteMemory }) => {
+export const Search = ({ memories, searchMemory, handleSearch}) => {
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const onSearchSubmit = (e) => {
+        e.preventDefault();
+        handleSearch(searchQuery);
+        // navigate("/");
+    };
+
     return (
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Search</span>
-        </div>
-        <input type="text" class="form-control" placeholder="Enter a keyword (i.e. tooth, Christmas, etc.)" aria-label="Username" aria-describedby="basic-addon1"></input>
-        </div>
+        <form onSubmit={onSearchSubmit}>
+            <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                    <span className="input-group-text" id="basic-addon1">Search</span>
+                </div>
+                <input type="text" className="form-control" placeholder="Enter a keyword (i.e. tooth, Christmas, etc.)" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}></input>
+                <div className="input-group-append">
+                    <button className="btn btn-outline-secondary" type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
     );
 };

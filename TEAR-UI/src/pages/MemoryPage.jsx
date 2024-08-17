@@ -36,7 +36,7 @@ const MemoryPage = ({ memories, setMemories }) => {
   const handleSearchMemory = (keyword) => {
     searchMemory(keyword)
       .then(() => {
-        setMemories(memories.filter((memory) => memory.id !== memoryId));
+        setMemories(memories.filter((memory) => memory.title !== keyword));
         setError(null);
       })
       .catch(() => {
@@ -46,7 +46,7 @@ const MemoryPage = ({ memories, setMemories }) => {
 
   return (
     <div className="mt-5 container">
-      <Search />
+      <Search memories={memories} searchMemory={handleSearchMemory} />
       <div className="card">
         <div className="card-header">Your Memories</div>
         <div className="card-body">
