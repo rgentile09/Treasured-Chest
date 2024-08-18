@@ -37,12 +37,25 @@ export const addMemory = async (formData, childId) => {
 
 export const deleteMemory = async (memoryId) => {
   try {
-    await axios.post(`${BASE_API_URL}/delete`, null, {
+    // await axios.post(`${BASE_API_URL}/delete`, null, {
+      await axios.post(`${BASE_API_URL}/delete`, null, {
       params: { memoryId },
       withCredentials: true, // Ensure credentials (cookies) are sent
     });
   } catch (error) {
     console.error('There was an error deleting the memory!', error);
+    throw error;
+  }
+};
+
+export const searchMemory = async (keyword) => {
+  try {
+    await axios.post(`${BASE_API_URL}/search`, null, {
+      params: { keyword },
+      withCredentials: true, // Ensure credentials (cookies) are sent
+    });
+  } catch (error) {
+    console.error('There was an error searching for the memory!', error);
     throw error;
   }
 };

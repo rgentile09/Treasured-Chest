@@ -69,6 +69,42 @@ public class MemoryController {
         }
     }
 
+//    @PostMapping("/search")
+//    public ResponseEntity<Map<String, String>> searchMemory(@RequestParam String keyword) {
+//        Map<String, String> responseBody = new HashMap<>();
+//
+//        User user = userController.getUserFromSession(session);
+//
+//        if (user != null) {
+//            // Fetch memories associated with the logged-in user
+//            List<Memory> memories = memoryRepository.findByUser(user);
+//            for (int i = 0; i < memories.size(); i++) {
+//                if (!memories[i].title.equals(keyword)) {
+//                    Long memoryId = memories[i].getId;
+//                    memories.deleteById(memoryId);
+//                }
+//            }
+//            return ResponseEntity.ok(memories);
+//        } else {
+//            // Return unauthorized status if user is not found in session
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//        }
+//    }
+
+    @GetMapping("/api/memories")
+    public List<Memory> getMemories(@RequestParam(value = "query", required = false) String query) {
+        Iterable<Memory> iterableMemories = memoryRepository.findAll();
+        List<Memory> memories = StreamSupport.stream(iterableMemories.spliterator(), false)
+                .collect(Collectors.toList());
+        if (query != null && !query.isEmpty()) {
+            memories = memories.stream()
+                    .filter(memory -> memory.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                            memory.getDescription().toLowerCase().contains(query.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        return memories;
+    }
+
 
     @PostMapping("/child/{childId}/new")
     public ResponseEntity<Map<String, String>> createMemory(@PathVariable Long childId,
