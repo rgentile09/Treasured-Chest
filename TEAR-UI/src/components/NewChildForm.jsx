@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { addChild } from '../services/childService';
+import { useNavigate } from 'react-router-dom';
 
 function NewChildForm() {
     const [firstName, setFirstName] = useState('');
     const [birthDate, setBirthDate] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -12,6 +14,8 @@ function NewChildForm() {
             setFirstName('');
             setBirthDate('');
             alert('Child added successfully!');
+            navigate('/DisplayChildren');
+
         } catch (error) {
             console.error('Error adding child:', error);
             alert('Failed to add child.');

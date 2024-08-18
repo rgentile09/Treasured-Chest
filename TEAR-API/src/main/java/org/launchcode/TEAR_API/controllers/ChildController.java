@@ -38,7 +38,7 @@ public class ChildController {
     }
 
 
-    @PostMapping("/delete")
+    @PostMapping("{childId}")
     public ResponseEntity<Map<String, String>> deleteChild(@RequestParam Long childId) {
         Map<String, String> responseBody = new HashMap<>();
 

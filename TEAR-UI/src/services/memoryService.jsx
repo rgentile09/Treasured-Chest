@@ -2,36 +2,24 @@ import axios from 'axios';
 
 const BASE_API_URL = 'http://localhost:8080/api/memories';
 
-export const fetchMemories = async () => {
+export const fetchMemories = async (childId) => {
   try {
-      const response = await axios.get(BASE_API_URL, {
-          withCredentials: true,
-      });
-      return response.data;
+    const response = await fetch(`http://localhost:8080/api/memories/child/${childId}`, {
+      credentials: 'include', // Include credentials (cookies)
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return await response.json();
   } catch (error) {
-      console.error("There was an error fetching the memories!", error);
-      throw error; 
+    console.error('There was an error fetching the memories!', error);
+    throw error;
   }
 };
 
-// export const addMemory = async (formData) => {
-//   try {
-//     const response = await axios.post(`${BASE_API_URL}/new`, formData, {
-//       headers: {
-//         'Content-Type': 'multipart/form-data',
-//       },
-//       withCredentials: true, // Ensure credentials (cookies) are sent
-//     });
-//     return response.data;
-//   } catch (error) {
-//     console.error('There was an error creating the memory!', error);
-//     throw error;
-//   }
-// };
-
-export const addMemory = async (formData) => {
+export const addMemory = async (formData, childId) => {
   try {
-    const response = await fetch('http://localhost:8080/api/child/{childId}/new', {
+    const response = await fetch(`http://localhost:8080/api/memories/child/${childId}/new`, {
       method: 'POST',
       body: formData,
       credentials: 'include', // Include credentials (cookies)
@@ -61,7 +49,7 @@ export const deleteMemory = async (memoryId) => {
 
 export const memoryPost = async (memory) => {
   try {
-    const response = await fetch('http://localhost:8080/api/child/{childId}/new', {
+    const response = await fetch(`http://localhost:8080/api/memories/child/${childId}/new`,  {
       method: 'POST',
       body: memory, // assuming memory is a FormData object
       credentials: 'include', // include credentials for session handling
@@ -77,6 +65,7 @@ export const memoryPost = async (memory) => {
     throw error;
   }
 };
+
 
 
 

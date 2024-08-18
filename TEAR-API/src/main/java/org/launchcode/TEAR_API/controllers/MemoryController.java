@@ -82,35 +82,38 @@ public class MemoryController {
         // Check if user is present in the session
         if (user != null) {
             Optional<Child> optionalChild = childRepository.findById(childId);
-            Child child = null;
             if (optionalChild.isPresent()) {
-                child = optionalChild.get();
+                Child child = optionalChild.get();
                 // check if userId equals the child's userID
                 if (!child.getUser().getId().equals(user.getId())) {
                     responseBody.put("message", "Cannot add memory. This is not your Child!");
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
                 }
 
+                // Handle file upload
+                String fileName = file.getOriginalFilename();
+                Path filePath = Paths.get(UPLOAD_DIR, fileName);
+                Files.createDirectories(filePath.getParent());
+                Files.write(filePath, file.getBytes());
+
+                System.out.println("File saved at: " + filePath.toAbsolutePath());
+
+                // Create and set up the new Memory object
+                Memory newMemory = new Memory(child, description, title, "/uploads/" + fileName);
+                memoryRepository.save(newMemory);
+                responseBody.put("message", "Memory successfully created");
+                return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
+            } else {
+                responseBody.put("message", "Child not found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
             }
-            // Handle file upload
-            String fileName = file.getOriginalFilename();
-            Path filePath = Paths.get(UPLOAD_DIR, fileName);
-            Files.createDirectories(filePath.getParent());
-            Files.write(filePath, file.getBytes());
-
-            System.out.println("File saved at: " + filePath.toAbsolutePath());
-
-            // Create and set up the new Memory object
-            Memory newMemory = new Memory(child, description, title, "/uploads/" + fileName);
-            memoryRepository.save(newMemory);
-            responseBody.put("message", "Memory successfully created");
-            return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
-        }else {
+        } else {
             // Return error response if user is not found in session
             responseBody.put("message", "User not found in session");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
         }
     }
+
 
     @GetMapping("/child/{childId}")
     public ResponseEntity<List<Memory>> getMemoriesByChildId(@PathVariable Long childId, HttpSession session) {
