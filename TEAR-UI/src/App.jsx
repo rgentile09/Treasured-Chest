@@ -15,6 +15,7 @@ import CreateAccount from "./pages/create-account";
 import DisplayMemory from './pages/DisplayMemory';
 import { fetchMemories, memoryPost, addMemory } from './services/memoryService';
 import MemoryDetail from './components/MemoryDetail';
+import FirstsPage from './pages/FirstsPage';
 import NewChildForm  from "./components/NewChildForm";
 import ChildDetail from './components/ChildDetail';
 import ChildTable from './components/ChildTable';
@@ -59,6 +60,8 @@ function App() {
                 <Route path="/memories" element={<AddMemoryPage addMemory={addMemory} />} />
                 <Route path="/add-memory" element={<DisplayMemory memoryPost={memoryPost} />} />
                 <Route path="/memory/:memoryId" element={<MemoryDetail memories={memories} />} />
+                <Route path="/firsts" element={<FirstsPage />} />
+
 
                 {/* <Route path="/memories" element={<Memories setMemoryPost={setMemoryPost} />} /> */}
                 <Route path="/add-child" element={<NewChildForm setChild={setChild} />} />

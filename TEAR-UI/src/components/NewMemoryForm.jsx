@@ -5,6 +5,7 @@ export const NewMemoryForm = ({ addMemory }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [file, setFile] = useState(null);
+    const [isFirst, setIsFirst] = useState("");
     const [childId, setChildId] = useState("");
     const [children, setChildren] = useState([]);
 
@@ -20,6 +21,22 @@ export const NewMemoryForm = ({ addMemory }) => {
       loadChildren();
     }, []);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // Check if all fields are filled
+        if (description !== "" && title !== "" && file !== null) {
+          const formData = new FormData();
+          formData.append("description", description);
+          formData.append("title", title);
+          formData.append("file", file);
+          formData.append("isFirst", isFirst);
+
+          // Log formData to check if everything is appended correctly
+          for (let pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]);
+          }
+
     const handleSubmit = async (e) => {
       e.preventDefault();
     
@@ -34,15 +51,15 @@ export const NewMemoryForm = ({ addMemory }) => {
           setTitle("");
           setDescription("");
           setFile(null);
+          setIsFirst(false);
           setChildId('');
   
         } catch (error) {
           console.error("Error adding memory:", error);
           alert("Failed to add memory.");
+        } else {
+          alert("Please fill out all fields before submitting.");
         }
-      } else {
-        alert("Please fill out all fields before submitting.");
-      }
     };
     
 
@@ -85,6 +102,15 @@ export const NewMemoryForm = ({ addMemory }) => {
             </label>
           </div>
           <div className="mb-3">
+            <label className="form-label">
+              Is this a first Memory?
+              <input
+                        type="checkbox"
+                        checked={isFirst}
+                        onChange={(e) => setIsFirst(e.target.checked)}
+                    />
+                    Mark as First
+            </label>
             <label className="form-label">Select Child</label>
             <select 
               className="form-control" 
