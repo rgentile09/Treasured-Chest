@@ -69,55 +69,19 @@ public class MemoryController {
         }
     }
 
-//    @PostMapping("/search")
-//    public ResponseEntity<Map<String, String>> searchMemory(@RequestParam String keyword) {
-//        Map<String, String> responseBody = new HashMap<>();
-//
-//        User user = userController.getUserFromSession(session);
-//
-//        if (user != null) {
-//            // Fetch memories associated with the logged-in user
-//            List<Memory> memories = memoryRepository.findByUser(user);
-//            for (int i = 0; i < memories.size(); i++) {
-//                if (!memories[i].title.equals(keyword)) {
-//                    Long memoryId = memories[i].getId;
-//                    memories.deleteById(memoryId);
-//                }
-//            }
-//            return ResponseEntity.ok(memories);
-//        } else {
-//            // Return unauthorized status if user is not found in session
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
-//    }
-
-    @GetMapping("/api/memories")
-    public List<Memory> getMemories(@RequestParam(value = "query", required = false) String query) {
-        Iterable<Memory> iterableMemories = memoryRepository.findAll();
-        List<Memory> memories = StreamSupport.stream(iterableMemories.spliterator(), false)
-                .collect(Collectors.toList());
-        if (query != null && !query.isEmpty()) {
-            memories = memories.stream()
-                    .filter(memory -> memory.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                            memory.getDescription().toLowerCase().contains(query.toLowerCase()))
-                    .collect(Collectors.toList());
-        }
-        return memories;
-    }
-
-
     @PostMapping("/child/{childId}/new")
     public ResponseEntity<Map<String, String>> createMemory(@PathVariable Long childId,
                                                             HttpSession session,
                                                             @RequestParam String description,
                                                             @RequestParam String title,
-                                                            @RequestParam("file") MultipartFile file) throws IOException {
+                                                            @RequestParam("file") MultipartFile file,
+                                                            @RequestParam(defaultValue = "false") boolean isFirst) throws IOException {
         // Fetch the user from the session
         User user = userController.getUserFromSession(session);
         Map<String, String> responseBody = new HashMap<>();
         // Check if user is present in the session
         if (user != null) {
-            Optional<Child> optionalChild = childRepository.findById(childId);
+             Optional<Child> optionalChild = childRepository.findById(childId);
             if (optionalChild.isPresent()) {
                 Child child = optionalChild.get();
                 // check if userId equals the child's userID
@@ -136,6 +100,7 @@ public class MemoryController {
 
                 // Create and set up the new Memory object
                 Memory newMemory = new Memory(child, description, title, "/uploads/" + fileName);
+                newMemory.setFirst(isFirst);
                 memoryRepository.save(newMemory);
                 responseBody.put("message", "Memory successfully created");
                 return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
@@ -143,11 +108,29 @@ public class MemoryController {
                 responseBody.put("message", "Child not found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
             }
+
         } else {
             // Return error response if user is not found in session
             responseBody.put("message", "User not found in session");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
         }
+    }
+
+    @GetMapping("/firsts")
+    public ResponseEntity<List<Memory>> getFirsts(HttpSession session) {
+        User user = userController.getUserFromSession(session);
+        if (user != null) {
+            List<Memory> firstMemories = memoryRepository.findByUserAndIsFirstTrue(user);
+            return ResponseEntity.ok(firstMemories);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+  
+    @GetMapping("/{memoryId}/comments")
+    public ResponseEntity<List<Comment>> getComments(@PathVariable Long memoryId) {
+        List<Comment> comments = commentRepository.findByMemoryId(memoryId);
+        return ResponseEntity.ok(comments);
     }
 
 
