@@ -1,10 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { fetchChildren } from '../services/childService';
 
 export const NewMemoryForm = ({ addMemory }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [file, setFile] = useState(null);
     const [isFirst, setIsFirst] = useState("");
+    const [childId, setChildId] = useState("");
+    const [children, setChildren] = useState([]);
+
+    useEffect(() => {
+      const loadChildren = async () => {
+        try {
+          const childrenData = await fetchChildren();
+          setChildren(childrenData);
+        } catch (error) {
+          console.error("Error fetching children:", error);
+        }
+      };
+      loadChildren();
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -22,15 +37,31 @@ export const NewMemoryForm = ({ addMemory }) => {
             console.log(pair[0]+ ', ' + pair[1]);
           }
 
-          addMemory(formData);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+    
+      if (description !== "" && title !== "" && file !== null) {
+        const formData = new FormData();
+        formData.append("description", description);
+        formData.append("title", title);
+        formData.append("file", file);
+    
+        try {
+          await addMemory(formData, childId);
           setTitle("");
           setDescription("");
           setFile(null);
-          setIsFirst(false)
+          setIsFirst(false);
+          setChildId('');
+  
+        } catch (error) {
+          console.error("Error adding memory:", error);
+          alert("Failed to add memory.");
         } else {
           alert("Please fill out all fields before submitting.");
         }
     };
+    
 
     return (
       <div className="mt-5">
@@ -80,6 +111,20 @@ export const NewMemoryForm = ({ addMemory }) => {
                     />
                     Mark as First
             </label>
+            <label className="form-label">Select Child</label>
+            <select 
+              className="form-control" 
+              value={childId} 
+              onChange={(e) => setChildId(e.target.value)} 
+              required
+            >
+              <option value="">Select a child</option>
+              {children.map(child => (
+                <option key={child.id} value={child.id}>
+                  {child.firstName}
+                </option>
+              ))}
+            </select>
           </div>
           <button type="submit" className="btn btn-primary mt-3">
             Add Memory
@@ -87,4 +132,5 @@ export const NewMemoryForm = ({ addMemory }) => {
         </form>
       </div>
     );
-};
+}; 
+

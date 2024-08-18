@@ -9,21 +9,23 @@ import {
 } from "react-router-dom";
 import Home from "./pages";
 import Login from "./pages/login";
-// import Memories from "./pages/memories";
 import MemoryPage from "./pages/MemoryPage";
 import { AddMemoryPage } from "./components/AddMemoryPage";
-import Children from "./pages/children";
 import CreateAccount from "./pages/create-account";
-import DisplayChildren from './pages/DisplayChildren';
 import DisplayMemory from './pages/DisplayMemory';
-import { fetchMemories, memoryPost  } from './services/memoryService';
+import { fetchMemories, memoryPost, addMemory } from './services/memoryService';
 import MemoryDetail from './components/MemoryDetail';
 import FirstsPage from './pages/FirstsPage';
+import NewChildForm  from "./components/NewChildForm";
+import ChildDetail from './components/ChildDetail';
+import ChildTable from './components/ChildTable';
+import ChildrenPage from './pages/ChildrenPage';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [memories, setMemories] = useState([]);
-  const [child, setChild] = useState();
+  const [child, setChild] = useState([]);
+  const [children, setChildren] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,15 +39,6 @@ function App() {
     
     fetchData();
   }, []);
-
-  const addMemory = async (memory) => {
-    try {
-      const newMemory = await memoryPost(memory);
-      setMemories([...memories, newMemory]);
-    } catch (error) {
-      console.error("Error adding memory:", error);
-    }
-  };
 
   return (
     <Router>
@@ -63,7 +56,7 @@ function App() {
             {/* Private Routes */}
             {authenticated ? (
               <>
-                <Route exact path="/" element={<><Home /><MemoryPage memories={memories} setMemories={setMemories} /></>} />
+                <Route exact path="/memories/child/:childId" element={<><Home /><MemoryPage memories={memories} setMemories={setMemories} /></>} />
                 <Route path="/memories" element={<AddMemoryPage addMemory={addMemory} />} />
                 <Route path="/add-memory" element={<DisplayMemory memoryPost={memoryPost} />} />
                 <Route path="/memory/:memoryId" element={<MemoryDetail memories={memories} />} />
@@ -71,9 +64,9 @@ function App() {
 
 
                 {/* <Route path="/memories" element={<Memories setMemoryPost={setMemoryPost} />} /> */}
-                <Route path="/children" element={<Children setChild={setChild} />} />
-                <Route path="/displayChildren" element={<DisplayChildren child={child} />} />
-                {/* <Route path="/display" element={<DisplayMemory memoryPost={memoryPost} />} /> */}
+                <Route path="/add-child" element={<NewChildForm setChild={setChild} />} />
+                <Route path="/displayChildren" element={<ChildrenPage children={children} setChildren={setChildren} />} />
+                <Route path="/children/:childId" element={<ChildDetail children={children} />} />
                 <Route path="/logout" element={<Home />} />
               </>
             ) : (
@@ -87,3 +80,4 @@ function App() {
 }
 
 export default App;
+
