@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const NewMemoryForm = ({ addMemory }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [file, setFile] = useState(null);
+    const navigate = useNavigate(); 
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,6 +26,8 @@ export const NewMemoryForm = ({ addMemory }) => {
           setTitle("");
           setDescription("");
           setFile(null);
+          navigate('/memories');
+
         } else {
           alert("Please fill out all fields before submitting.");
         }
@@ -67,7 +71,7 @@ export const NewMemoryForm = ({ addMemory }) => {
               />
             </label>
           </div>
-          <button type="submit" className="btn btn-primary mt-3">
+          <button type="submit" className="btn btn-primary mt-3" >
             Add Memory
           </button>
         </form>

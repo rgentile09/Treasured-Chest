@@ -62,8 +62,9 @@ function App() {
             {/* Private Routes */}
             {authenticated ? (
               <>
-                <Route exact path="/" element={<><Home /><MemoryPage memories={memories} setMemories={setMemories} /></>} />
-                <Route path="/memories" element={<AddMemoryPage addMemory={addMemory} />} />
+                <Route exact path="/" element={<Home />} />
+                <Route path="/memories" element={<MemoryPage memories={memories} setMemories={setMemories} />} />
+                <Route path="/memory" element={<AddMemoryPage addMemory={addMemory} />} />
                 <Route path="/add-memory" element={<DisplayMemory memoryPost={memoryPost} />} />
                 <Route path="/memory/:memoryId" element={<MemoryDetail memories={memories} />} />
 

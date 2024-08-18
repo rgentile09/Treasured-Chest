@@ -1,7 +1,9 @@
 import React from "react";
 import { NewMemoryForm } from "./NewMemoryForm";
+import { useNavigate } from "react-router-dom";
 
 export const AddMemoryPage = ({ addMemory }) => {
+
   return (
     <div className="mt-5 container">
       <div className="card">
