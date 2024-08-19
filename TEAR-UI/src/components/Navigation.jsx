@@ -6,7 +6,7 @@ const Navigation = ({ isLoggedIn, handleLogout }) => {
         <nav className="navbar navbar-expand-lg navbar-dark">
             <Link className="navbar-brand" to="/">
                 <div className="logo-link">
-                    <img className="logo" src="/assets/treasured-chest-logo.svg" alt="Logo" />
+                    <img className="logo" src="src/assets/treasured-chest-logo.svg" alt="Logo" />
                     <h2>Treasured Chest</h2>
                 </div>
             </Link>
