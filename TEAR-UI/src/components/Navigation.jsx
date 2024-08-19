@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Navigation = ({ isLoggedIn, handleLogout }) => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark">
-            <Link className="navbar-brand" to="/">
+            <Link className="navbar-brand" to="/displayChildren">
                 <div className="logo-link">
                     <img className="logo" src="src/assets/treasured-chest-logo.svg" alt="Logo" />
                     <h2>Treasured Chest</h2>
