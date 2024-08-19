@@ -21,21 +21,6 @@ export const NewMemoryForm = ({ addMemory }) => {
       loadChildren();
     }, []);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        // Check if all fields are filled
-        if (description !== "" && title !== "" && file !== null) {
-          const formData = new FormData();
-          formData.append("description", description);
-          formData.append("title", title);
-          formData.append("file", file);
-          formData.append("isFirst", isFirst);
-
-          // Log formData to check if everything is appended correctly
-          for (let pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]);
-          }
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -45,7 +30,8 @@ export const NewMemoryForm = ({ addMemory }) => {
         formData.append("description", description);
         formData.append("title", title);
         formData.append("file", file);
-    
+        formData.append("isFirst", isFirst);
+
         try {
           await addMemory(formData, childId);
           setTitle("");
@@ -57,6 +43,7 @@ export const NewMemoryForm = ({ addMemory }) => {
         } catch (error) {
           console.error("Error adding memory:", error);
           alert("Failed to add memory.");
+        }
         } else {
           alert("Please fill out all fields before submitting.");
         }

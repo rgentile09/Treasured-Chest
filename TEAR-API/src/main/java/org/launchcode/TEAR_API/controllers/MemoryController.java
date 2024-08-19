@@ -1,9 +1,11 @@
 package org.launchcode.TEAR_API.controllers;
 import jakarta.servlet.http.HttpSession;
 import org.launchcode.TEAR_API.models.Child;
+import org.launchcode.TEAR_API.models.Comment;
 import org.launchcode.TEAR_API.models.Memory;
 import org.launchcode.TEAR_API.models.User;
 import org.launchcode.TEAR_API.repositories.ChildRepository;
+import org.launchcode.TEAR_API.repositories.CommentRepository;
 import org.launchcode.TEAR_API.repositories.MemoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +41,8 @@ public class MemoryController {
     @Autowired
     private UserController userController;
 
-
+    @Autowired
+    private CommentRepository commentRepository;
     @GetMapping
     public ResponseEntity<List<Memory>> getAllMemories(HttpSession session) {
         User user = userController.getUserFromSession(session);
@@ -99,7 +102,7 @@ public class MemoryController {
                 System.out.println("File saved at: " + filePath.toAbsolutePath());
 
                 // Create and set up the new Memory object
-                Memory newMemory = new Memory(child, description, title, "/uploads/" + fileName);
+                Memory newMemory = new Memory(child, description, title, "/uploads/" + fileName, isFirst, user);
                 newMemory.setFirst(isFirst);
                 memoryRepository.save(newMemory);
                 responseBody.put("message", "Memory successfully created");
