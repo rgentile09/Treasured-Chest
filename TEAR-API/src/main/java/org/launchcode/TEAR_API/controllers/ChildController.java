@@ -26,8 +26,8 @@ public class ChildController {
     @GetMapping
     public ResponseEntity<List<Child>> getAllChildren(HttpSession session) {
         User user = userController.getUserFromSession(session);
-        Long userId = user.getId();
         if (user != null) {
+            Long userId = user.getId();
             // Fetch memories associated with the logged-in user
             List<Child> children = (List<Child>) childRepository.findByUserId(userId);
             return ResponseEntity.ok(children);

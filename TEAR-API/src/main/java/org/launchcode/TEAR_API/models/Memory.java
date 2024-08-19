@@ -46,6 +46,15 @@ public class Memory {
         this.imageUrl = imageUrl;
     }
 
+    public Memory(Child child, String description, String title, String imageUrl, boolean isFirst, User user) {
+        this.child = child;
+        this.description = description;
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.isFirst = isFirst;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }

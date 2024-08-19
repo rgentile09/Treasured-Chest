@@ -2,7 +2,20 @@ import axios from 'axios';
 
 const BASE_API_URL = 'http://localhost:8080/api/memories';
 
-export const fetchMemories = async (childId) => {
+export const fetchMemories = async () => {
+  try {
+      const response = await axios.get(BASE_API_URL, {
+          withCredentials: true,
+      });
+      return response.data;
+  } catch (error) {
+      console.error("There was an error fetching the memories!", error);
+      throw error; 
+  }
+};
+
+
+export const fetchMemoriesByChild = async (childId) => {
   try {
     const response = await fetch(`http://localhost:8080/api/memories/child/${childId}`, {
       credentials: 'include', // Include credentials (cookies)
