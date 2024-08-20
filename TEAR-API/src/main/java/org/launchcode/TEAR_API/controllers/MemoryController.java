@@ -16,10 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 @RestController
@@ -129,7 +126,7 @@ public class MemoryController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
-  
+
     @GetMapping("/{memoryId}/comments")
     public ResponseEntity<List<Comment>> getComments(@PathVariable Long memoryId) {
         List<Comment> comments = commentRepository.findByMemoryId(memoryId);
@@ -153,6 +150,23 @@ public class MemoryController {
             }
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // User not found in session
+        }
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity<Memory> getRandomMemory(HttpSession session) {
+        User user = userController.getUserFromSession(session);
+        if (user != null) {
+            List<Memory> memories = memoryRepository.findByUser(user);
+            if (!memories.isEmpty()) {
+                Random random = new Random();
+                Memory randomMemory = memories.get(random.nextInt(memories.size()));
+                return ResponseEntity.ok(randomMemory);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 

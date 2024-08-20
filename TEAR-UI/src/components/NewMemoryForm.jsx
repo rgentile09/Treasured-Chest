@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchChildren } from '../services/childService';
+import { useNavigate } from "react-router-dom";
 
 export const NewMemoryForm = ({ addMemory }) => {
     const [title, setTitle] = useState("");
@@ -8,6 +9,7 @@ export const NewMemoryForm = ({ addMemory }) => {
     const [isFirst, setIsFirst] = useState("");
     const [childId, setChildId] = useState("");
     const [children, setChildren] = useState([]);
+    const navigate = useNavigate(); 
 
     useEffect(() => {
       const loadChildren = async () => {
@@ -39,16 +41,17 @@ export const NewMemoryForm = ({ addMemory }) => {
           setFile(null);
           setIsFirst(false);
           setChildId('');
+          navigate('/memories');
   
         } catch (error) {
           console.error("Error adding memory:", error);
           alert("Failed to add memory.");
         }
+
         } else {
           alert("Please fill out all fields before submitting.");
         }
     };
-    
 
     return (
       <div className="mt-5">
