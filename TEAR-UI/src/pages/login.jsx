@@ -49,7 +49,7 @@ function Login ({ setAuthenticated })  {
                 <h4>From your child’s first steps to their last tooth, never lose track of the memories important to you.</h4>
                 <p>Or, <a href="/create-account">create an account</a> if you don't have an account with us.</p>
             </div>
-            <div>
+            <div className="section">
                 <h2>Login</h2>
                 <form onSubmit={handleLogin}>
                     <input type="text" value={username} 

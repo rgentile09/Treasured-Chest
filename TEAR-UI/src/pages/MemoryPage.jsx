@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { fetchMemories, deleteMemory } from "../services/memoryService";
+import { fetchMemoriesByChild, deleteMemory, searchMemory} from "../services/memoryService";
 import { MemoryTable } from "../components/MemoryTable";
+import { Search } from "../components/Search";
 
 const MemoryPage = ({ memories, setMemories }) => {
   const [error, setError] = useState(null);
@@ -9,7 +10,7 @@ const MemoryPage = ({ memories, setMemories }) => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const memoriesData = await fetchMemories();
+        const memoriesData = await fetchMemoriesByChild();
         setMemories(memoriesData);
       } catch (error) {
         setError("Error fetching data.");
@@ -32,12 +33,23 @@ const MemoryPage = ({ memories, setMemories }) => {
       });
   };
 
+  const handleSearchMemory = (keyword) => {
+    searchMemory(keyword)
+      .then(() => {
+        setMemories(memories.filter((memory) => memory.title !== keyword));
+        setError(null);
+      })
+      .catch(() => {
+        // setError("There was an error deleting the memory!");
+      });
+  };
+
   return (
     <div className="mt-5 container">
       <div className="card">
         <div className="card-header">Your Memories</div>
         <div className="card-body">
-          {loading ? <p>Loading...</p> : <MemoryTable memories={memories} deleteMemory={handleDeleteMemory} />}
+          {loading ? <p>Loading...</p> : <MemoryTable memories={memories} deleteMemory={handleDeleteMemory} searchMemory={handleSearchMemory} />}
           {error && <div className="alert alert-danger">{error}</div>}
         </div>
       </div>

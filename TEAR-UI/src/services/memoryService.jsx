@@ -14,24 +14,25 @@ export const fetchMemories = async () => {
   }
 };
 
-// export const addMemory = async (formData) => {
-//   try {
-//     const response = await axios.post(`${BASE_API_URL}/new`, formData, {
-//       headers: {
-//         'Content-Type': 'multipart/form-data',
-//       },
-//       withCredentials: true, // Ensure credentials (cookies) are sent
-//     });
-//     return response.data;
-//   } catch (error) {
-//     console.error('There was an error creating the memory!', error);
-//     throw error;
-//   }
-// };
 
-export const addMemory = async (formData) => {
+export const fetchMemoriesByChild = async (childId) => {
   try {
-    const response = await fetch('http://localhost:8080/api/memories/new', {
+    const response = await fetch(`http://localhost:8080/api/memories/child/${childId}`, {
+      credentials: 'include', // Include credentials (cookies)
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('There was an error fetching the memories!', error);
+    throw error;
+  }
+};
+
+export const addMemory = async (formData, childId) => {
+  try {
+    const response = await fetch(`http://localhost:8080/api/memories/child/${childId}/new`, {
       method: 'POST',
       body: formData,
       credentials: 'include', // Include credentials (cookies)
@@ -49,7 +50,8 @@ export const addMemory = async (formData) => {
 
 export const deleteMemory = async (memoryId) => {
   try {
-    await axios.post(`${BASE_API_URL}/delete`, null, {
+    // await axios.post(`${BASE_API_URL}/delete`, null, {
+      await axios.post(`${BASE_API_URL}/delete`, null, {
       params: { memoryId },
       withCredentials: true, // Ensure credentials (cookies) are sent
     });
@@ -59,9 +61,21 @@ export const deleteMemory = async (memoryId) => {
   }
 };
 
+export const searchMemory = async (keyword) => {
+  try {
+    await axios.post(`${BASE_API_URL}/search`, null, {
+      params: { keyword },
+      withCredentials: true, // Ensure credentials (cookies) are sent
+    });
+  } catch (error) {
+    console.error('There was an error searching for the memory!', error);
+    throw error;
+  }
+};
+
 export const memoryPost = async (memory) => {
   try {
-    const response = await fetch('http://localhost:8080/api/memories/new', {
+    const response = await fetch(`http://localhost:8080/api/memories/child/${childId}/new`,  {
       method: 'POST',
       body: memory, // assuming memory is a FormData object
       credentials: 'include', // include credentials for session handling
@@ -77,6 +91,19 @@ export const memoryPost = async (memory) => {
     throw error;
   }
 };
+
+export const fetchFirsts = async () => {
+  try {
+      const response = await axios.get('http://localhost:8080/api/memories/firsts', {
+          withCredentials: true,
+      });
+      return response.data;
+  } catch (error) {
+      console.error("There was an error fetching the first memories!", error);
+      throw error;
+  }
+}; 
+
 
 
 

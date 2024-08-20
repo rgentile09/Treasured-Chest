@@ -1,37 +1,38 @@
-import axios from "axios";
+import axios from 'axios';
 
-const BASEAPIURL = "http://localhost:8080";
-
+const BASE_API_URL = 'http://localhost:8080/api/children';
 export const fetchChildren = async () => {
-  try {
-    const response = await axios.get(`${BASEAPIURL}/api/children`);
-    return response.data;
-  } catch (error) {
-    console.error("There was an error fetching the children!", error);
-  }
+    try {
+        const response = await axios.get(BASE_API_URL, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        throw new Error('Error fetching children: ' + error.message);
+    }
 };
 
-export const addChild = async (formData) => {
-  try {
-    const response = await axios.post(`${BASEAPIURL}/api/children/add`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-       },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("There was an error creating the child!", error);
-    throw error;
-  }
+export const addChild = async (child) => {
+    try {
+        const response = await axios.post(`${BASE_API_URL}/new`, child, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error('Error adding child: ' + error.message);
+    }
 };
 
-export const deleteChild = async (userId) => {
-  try {
-    await axios.post(`${BASEAPIURL}/api/user/delete`, null, {
-      params: { userId },
-    });
-  } catch (error) {
-    console.error("There was an error deleting the child!", error);
-    throw error;
-  }
+export const deleteChild = async (childId) => {
+    try {
+        const response = await axios.post(`${BASE_API_URL}/delete`, null, {
+            params: {childId},
+            withCredentials: true,
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error('Error deleting child: ' + error.message);
+    }
 };
+

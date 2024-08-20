@@ -22,26 +22,27 @@ public class Child {
     @Column
     @NotNull
     private String birthDate;
-    @Column
-    private String childPhoto;
-
-    // No-argument constructor
     public Child() {
     }
 
-
-    // Parameterized constructor
-    public Child(String firstName, String birthDate, String childPhoto) {
+    public Child(String firstName, String birthDate) {
         this.firstName = firstName;
         this.birthDate = birthDate;
-        this.childPhoto = childPhoto;
     }
 
-    // Getters and setters
+    public Child(User user, String firstName, String birthDate) {
+        this.user = user;
+        this.firstName = firstName;
+        this.birthDate = birthDate;
+    }
+
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -57,14 +58,6 @@ public class Child {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public String getChildPhoto() {
-        return childPhoto;
-    }
-
-    public void setChildPhoto(String childPhoto) {
-        this.childPhoto = childPhoto;
     }
 
     public User getUser() {

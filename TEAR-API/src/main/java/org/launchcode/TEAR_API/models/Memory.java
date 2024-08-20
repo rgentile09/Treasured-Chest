@@ -9,16 +9,28 @@ public class Memory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name="child_id")
+    private Child child;
     private String description;
     private String title;
     private String imageUrl;
+    private boolean isFirst = false;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Constructors
+
     public Memory() {}
+
+    public Memory(String description, String title, String imageUrl, Boolean isFirst, User user) {
+        this.description = description;
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.isFirst = isFirst;
+        this.user = user;
+    }
 
     public Memory(String description, String title, String imageUrl, User user) {
         this.description = description;
@@ -27,13 +39,36 @@ public class Memory {
         this.user = user;
     }
 
-    // Getters and Setters
+    public Memory(Child child, String description, String title, String imageUrl) {
+        this.child = child;
+        this.description = description;
+        this.title = title;
+        this.imageUrl = imageUrl;
+    }
+
+    public Memory(Child child, String description, String title, String imageUrl, boolean isFirst, User user) {
+        this.child = child;
+        this.description = description;
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.isFirst = isFirst;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Child getChild() {
+        return child;
+    }
+
+    public void setChild(Child child) {
+        this.child = child;
     }
 
     public String getDescription() {
@@ -60,6 +95,13 @@ public class Memory {
         this.imageUrl = imageUrl;
     }
 
+    public boolean getFirst() {
+        return isFirst;
+    }
+
+    public void setFirst(boolean first) {
+        isFirst = first;
+    }
 
     public User getUser() {
         return user;

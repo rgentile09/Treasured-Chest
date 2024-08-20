@@ -54,8 +54,8 @@ const MemoryDetail = ({ memories }) => {
   const imagePath = `http://localhost:8080${memory.imageUrl}`;
 
   return (
-    <div className="container mt-5">
-      <div className="card" style={{ textAlign: 'center', padding: '20px' }}>
+    <div className="wrapper">
+      <div className="form-page" style={{ textAlign: 'center', padding: '20px' }}>
         <h5 className="card-title centered-title mb-5" style={{ fontSize: '5rem', marginBottom: '20px' }}>{memory.title}</h5>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
             <img 
