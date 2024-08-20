@@ -17,16 +17,15 @@ import DisplayMemory from './pages/DisplayMemory';
 import { fetchMemories, memoryPost, addMemory } from './services/memoryService';
 import MemoryDetail from './components/MemoryDetail';
 import FirstsPage from './pages/FirstsPage';
-import NewChildForm  from "./components/NewChildForm";
 import ChildDetail from './components/ChildDetail';
 import ChildTable from './components/ChildTable';
 import ChildrenPage from './pages/ChildrenPage';
+import Questionnaire from './pages/Questionnaire'; // Ensure the path is correct
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [memories, setMemories] = useState([]);
-  // const [child, setChild] = useState([]);
-  const [child, addChild] = useState([]);
+  const [child, setChild] = useState([]); // Fixed state setter name
   const [children, setChildren] = useState([]);
 
   useEffect(() => {
@@ -49,10 +48,7 @@ function App() {
         <header className="App-header">
           <Routes>
             {/* Public Routes */}
-            <Route
-              path="/login"
-              element={<Login setAuthenticated={setAuthenticated} />}
-            />
+            <Route path="/login" element={<Login setAuthenticated={setAuthenticated} />} />
             <Route path="/create-account" element={<CreateAccount />} />
 
             {/* Private Routes */}
@@ -64,10 +60,8 @@ function App() {
                 <Route path="/add-memory" element={<DisplayMemory memoryPost={memoryPost} />} />
                 <Route path="/memory/:memoryId" element={<MemoryDetail memories={memories} />} />
                 <Route path="/firsts" element={<FirstsPage />} />
-
-
-                {/* <Route path="/memories" element={<Memories setMemoryPost={setMemoryPost} />} /> */}
-                <Route path="/add-child" element={<AddChildPage addChild={addChild} />} />
+                <Route path="/questionnaire" element={<Questionnaire />} /> {/* Added Questionnaire route */}
+                <Route path="/add-child" element={<AddChildPage addChild={setChild} />} />
                 <Route path="/displayChildren" element={<ChildrenPage children={children} setChildren={setChildren} />} />
                 <Route path="/children/:childId" element={<ChildDetail children={children} />} />
                 <Route path="/logout" element={<Home />} />
@@ -83,4 +77,5 @@ function App() {
 }
 
 export default App;
+
 

@@ -4,21 +4,28 @@ import axios from 'axios';
 const Home = () => {
   const [randomMemory, setRandomMemory] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // Define loading state
 
   useEffect(() => {
     const fetchRandomMemory = async () => {
+      setLoading(true); // Start loading
       try {
         const response = await axios.get('http://localhost:8080/api/memories/random', { withCredentials: true });
-          setRandomMemory(response.data);
-        } catch (error) {
-            setError("Error fetching data.");
-          } finally {
-            setLoading(false);
-          }
+        setRandomMemory(response.data);
+        setError(null); // Clear any previous errors
+      } catch (error) {
+        setError("Error fetching data.");
+      } finally {
+        setLoading(false); // End loading
+      }
     };
 
     fetchRandomMemory();
   }, []);
+
+  if (loading) {
+    return <p>Loading your random memory...</p>; // Show loading state
+  }
 
   return (
     <div className="container mt-5">
@@ -26,7 +33,7 @@ const Home = () => {
       {error && <div className="alert alert-danger">{error}</div>}
       {randomMemory ? (
         <div className="card mt-4">
-            <label>One of your beautiful memories!</label>
+          <label>One of your beautiful memories!</label>
           <img src={`http://localhost:8080${randomMemory.imageUrl}`} className="card-img-top" alt={randomMemory.title} />
           <div className="card-body">
             <h5 className="card-title">{randomMemory.title}</h5>
@@ -34,7 +41,7 @@ const Home = () => {
           </div>
         </div>
       ) : (
-        !error && <p>Loading your random memory...</p>
+        !error && <p>No random memory found.</p>
       )}
     </div>
   );
