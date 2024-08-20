@@ -11,7 +11,7 @@ function Questionnaire() {
   });
   const [questionnaires, setQuestionnaires] = useState([]);
   const [childId, setChildId] = useState("");
-    const [children, setChildren] = useState([]);
+  const [children, setChildren] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -31,7 +31,7 @@ function Questionnaire() {
     const fetchQuestionnaires = async () => {
       try {
         const response = await QuestionnaireService.getAllQuestionnaires();
-        setQuestionnaires(response); // Assuming response is directly the data array
+        setQuestionnaires(response);
         setError(null);
       } catch (error) {
         console.error('Error fetching questionnaires:', error);
@@ -55,10 +55,7 @@ function Questionnaire() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await QuestionnaireService.addQuestionnaire({
-        ...formData,
-        // Include selected childId in form data
-      });
+      const response = await QuestionnaireService.addQuestionnaire(formData, childId);
       setQuestionnaires((prevQuestionnaires) => [
         ...prevQuestionnaires,
         response,
@@ -68,16 +65,14 @@ function Questionnaire() {
         vacation: '',
         growth: '',
         summary: '',
-        childId: '',
-      }); // Reset form after submission
-      setChildId(""); // Reset child selection
+      });
+      setChildId("");
       setError(null);
     } catch (error) {
       console.error('Error adding questionnaire:', error);
       setError('Failed to submit questionnaire.');
     }
   };
-  
 
   return (
     <div className="form-container">
@@ -120,25 +115,25 @@ function Questionnaire() {
           />
         </div>
         <div>
-        <label className="form-label">Select Child</label>
-            <select 
-              className="form-control" 
-              value={childId} 
-              onChange={(e) => setChildId(e.target.value)} 
-              required
-            >
-              <option value="">Select a child</option>
-              {children.map(child => (
-                <option key={child.id} value={child.id}>
-                  {child.firstName}
-                </option>
-              ))}
-            </select>
+          <label className="form-label">Select Child</label>
+          <select 
+            className="form-control" 
+            value={childId} 
+            onChange={(e) => setChildId(e.target.value)} 
+            required
+          >
+            <option value="">Select a child</option>
+            {children.map(child => (
+              <option key={child.id} value={child.id}>
+                {child.firstName}
+              </option>
+            ))}
+          </select>
         </div>
         <button type="submit">Submit</button>
       </form>
-   
-    <h1>Questionnaires</h1>
+  
+      <h1>Questionnaires</h1>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -147,8 +142,8 @@ function Questionnaire() {
         <ul>
           {questionnaires.length > 0 ? (
             questionnaires.map((questionnaire) => (
-              <li key={questionnaire.id}> {/* Use a unique identifier for the key */}
-                {questionnaire.title}
+              <li key={questionnaire.id}>
+                {questionnaire.favoriteFood} {/* Adjust according to your data */}
               </li>
             ))
           ) : (
@@ -159,7 +154,9 @@ function Questionnaire() {
     </div>
   );
 }
+
 export default Questionnaire;
+
 
 
 

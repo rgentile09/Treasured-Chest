@@ -23,15 +23,18 @@ const getAllQuestionnaires = async () => {
 };
 
 // Function to add a new questionnaire
-const addQuestionnaire = async (questionnaire) => {
+const addQuestionnaire = async (questionnaire, childId) => {
   try {
     const response = await fetch(BASE_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(questionnaire),
-      credentials: 'include', // Ensure this matches with your server settings
+      body: JSON.stringify({
+        ...questionnaire,
+        child: { id: childId } // Include the childId in the request body as part of the child object
+      }),
+      credentials: 'include',
     });
 
     if (!response.ok) {
@@ -41,10 +44,11 @@ const addQuestionnaire = async (questionnaire) => {
     return await response.json();
   } catch (error) {
     console.error('Error adding questionnaire:', error);
-    throw error; // Rethrow the error so the caller can handle it
+    throw error;
   }
 };
 
 export default { getAllQuestionnaires, addQuestionnaire };
+
 
 
