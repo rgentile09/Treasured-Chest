@@ -110,7 +110,13 @@ form > label {
   font-weight: 500; 
 }
 
-input, textarea {
+input[type=checkbox] {
+  left: 0px; 
+  top: 0; 
+  vertical-align: 0; 
+}
+
+input[type=text], input[type=file], input[type=password], textarea {
   width: 100%; 
   padding: 10px; 
   /* border: 5px var(--dark-grey); */

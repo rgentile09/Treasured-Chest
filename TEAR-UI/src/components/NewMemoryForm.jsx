@@ -54,56 +54,33 @@ export const NewMemoryForm = ({ addMemory }) => {
     };
 
     return (
-      <div className="mt-5">
+      <div className="section">
+        <h2>Add a new memory</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="form-label">
-              Title
-              <input
-                type="text"
-                className="form-control"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              />
-            </label>
-          </div>
-          <div className="mb-3">
-            <label className="form-label">
-              Description
-              <textarea
-                rows={3}
-                className="form-control"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required
-              />
-            </label>
-          </div>
-          <div className="mb-3">
-            <label className="form-label">
-              Image
-              <input
-                type="file"
-                className="form-control"
-                onChange={(e) => setFile(e.target.files[0])}
-                required
-              />
-            </label>
-          </div>
-          <div className="mb-3">
-            <label className="form-label">
-              Is this a first Memory?
-              <input
-                        type="checkbox"
-                        checked={isFirst}
-                        onChange={(e) => setIsFirst(e.target.checked)}
-                    />
-                    Mark as First
-            </label>
+            <input
+              type="text"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+            <textarea
+              rows={3}
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+            <input
+              type="file"
+              placeholder="Upload an image"
+              onChange={(e) => setFile(e.target.files[0])}
+              required
+            />
+            <label className="checkbox-inline"><input type="checkbox" checked={isFirst} onChange={(e) => setIsFirst(e.target.checked)}/> Mark as First</label>
             <label className="form-label">Select Child</label>
             <select 
-              className="form-control" 
+
               value={childId} 
               onChange={(e) => setChildId(e.target.value)} 
               required
@@ -115,7 +92,6 @@ export const NewMemoryForm = ({ addMemory }) => {
                 </option>
               ))}
             </select>
-          </div>
           <button type="submit" className="btn btn-primary mt-3">
             Add Memory
           </button>

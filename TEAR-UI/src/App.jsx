@@ -11,6 +11,7 @@ import Home from "./pages";
 import Login from "./pages/login";
 import MemoryPage from "./pages/MemoryPage";
 import { AddMemoryPage } from "./components/AddMemoryPage";
+import { AddChildPage } from './components/AddChildPage';
 import CreateAccount from "./pages/create-account";
 import DisplayMemory from './pages/DisplayMemory';
 import { fetchMemories, memoryPost, addMemory } from './services/memoryService';
@@ -24,7 +25,8 @@ import ChildrenPage from './pages/ChildrenPage';
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [memories, setMemories] = useState([]);
-  const [child, setChild] = useState([]);
+  // const [child, setChild] = useState([]);
+  const [child, addChild] = useState([]);
   const [children, setChildren] = useState([]);
 
   useEffect(() => {
@@ -65,7 +67,7 @@ function App() {
 
 
                 {/* <Route path="/memories" element={<Memories setMemoryPost={setMemoryPost} />} /> */}
-                <Route path="/add-child" element={<NewChildForm setChild={setChild} />} />
+                <Route path="/add-child" element={<AddChildPage addChild={addChild} />} />
                 <Route path="/displayChildren" element={<ChildrenPage children={children} setChildren={setChildren} />} />
                 <Route path="/children/:childId" element={<ChildDetail children={children} />} />
                 <Route path="/logout" element={<Home />} />
