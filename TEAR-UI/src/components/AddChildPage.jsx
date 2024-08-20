@@ -1,14 +1,15 @@
 import React from "react";
-import NewChildForm  from "./NewChildForm";
+import NewChildForm from "./NewChildForm";
+import Quote from "./Quote";
 
 export const AddChildPage = ({ addChild }) => {
   return (
-    <div className="mt-5 container">
-      <div className="card">
-        <div className="card-header">Add a New Memory</div>
-        <div className="card-body">
-          <NewChildForm addChild={addChild} />
-        </div>
+    <div className="wrapper">
+      <div className="section informational" id="destination">
+        <Quote />
+      </div>
+      <div className="section form">
+        <NewChildForm addChild={addChild} />
       </div>
     </div>
   );

@@ -74,7 +74,7 @@ export const NewMemoryForm = ({ addMemory }) => {
               onChange={(e) => setFile(e.target.files[0])}
               required
             />
-            <label><input type="checkbox" checked={isFirst} onChange={(e) => setIsFirst(e.target.checked)}/> Mark as First</label>
+            <label className="checkbox-inline"><input type="checkbox" checked={isFirst} onChange={(e) => setIsFirst(e.target.checked)}/> Mark as First</label>
             <label className="form-label">Select Child</label>
             <select 
 
