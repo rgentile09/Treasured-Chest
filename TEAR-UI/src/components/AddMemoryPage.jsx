@@ -8,14 +8,7 @@ export const AddMemoryPage = ({ addMemory }) => {
       <div className="section informational" id="destination">
         <Quote />
       </div>
-      <div className="section form">
-        <div className="card">
-          <div className="card-header">Add a New Memory</div>
-          <div className="card-body">
-            <NewMemoryForm addMemory={addMemory} />
-          </div>
-        </div>
-      </div>
+      <NewMemoryForm addMemory={addMemory} />
     </div>
   );
 };
