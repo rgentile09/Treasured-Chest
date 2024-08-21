@@ -20,9 +20,8 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class UserController {
 
-    
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     private static final String userSessionKey = "user";
 
@@ -31,88 +30,80 @@ public class UserController {
         if (userId == null) {
             return null;
         }
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            return null;
+        return userRepository.findById(userId).orElse(null);
+    }
+
+    private void setUserInSession(HttpSession session, User user) {
+        if (user != null) {
+            session.setAttribute(userSessionKey, user.getId());
+        } else {
+            throw new IllegalArgumentException("User cannot be null");
         }
-        return user.get();
     }
 
-    private static void setUserInSession(HttpSession session, User user) {
-        session.setAttribute(userSessionKey, user.getId());
-    }
-
-    @PostMapping(value= "/create-account" )
+    @PostMapping("/create-account")
     public ResponseEntity<Map<String, String>> processRegistrationForm(@RequestBody RegisterFormDTO registerFormDTO,
                                                                        HttpServletRequest request) {
-        ResponseEntity<Map<String,String>> response = null;  
-        Map<String, String> responseBody = new HashMap<>(); 
+        Map<String, String> responseBody = new HashMap<>();
         try {
-            User existingUser = userRepository.findByUsername(registerFormDTO.getUsername());
-            if (existingUser == null && !registerFormDTO.getUsername().isEmpty() && !registerFormDTO.getPassword().isEmpty()) {
-                responseBody.put("message", "User successfully created.");
-                response = ResponseEntity
-                        .status(HttpStatus.CREATED)
-                        .body(responseBody);
-              User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword(),registerFormDTO.getFirstName(),registerFormDTO.getLastName(), registerFormDTO.getEmail());
-               setUserInSession(request.getSession(), newUser); 
-              userRepository.save(newUser);
-            } else if (existingUser != null) {
-                responseBody.put("message", " Username already exists.");
-                response = ResponseEntity
-                        .status(HttpStatus.BAD_REQUEST)
-                        .body(responseBody);
-            } else if (registerFormDTO.getUsername().isEmpty() ) {
+            if (registerFormDTO.getUsername().isEmpty()) {
                 responseBody.put("message", "Username required.");
-                response = ResponseEntity
-                        .status(HttpStatus.BAD_REQUEST)
-                        .body(responseBody);
-            } else if (registerFormDTO.getPassword().isEmpty()) {
-                responseBody.put("message", "Password is required.");
-                response = ResponseEntity
-                        .status(HttpStatus.BAD_REQUEST)
-                        .body(responseBody);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
             }
+            if (registerFormDTO.getPassword().isEmpty()) {
+                responseBody.put("message", "Password is required.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+            }
+
+            User existingUser = userRepository.findByUsername(registerFormDTO.getUsername());
+            if (existingUser != null) {
+                responseBody.put("message", "Username already exists.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+            }
+
+            User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword(),
+                                    registerFormDTO.getFirstName(), registerFormDTO.getLastName(),
+                                    registerFormDTO.getEmail());
+            userRepository.save(newUser);
+            setUserInSession(request.getSession(), newUser);
+
+            responseBody.put("message", "User successfully created.");
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
+
         } catch (Exception ex) {
-            responseBody.put("message", "An exception occurred due to " + ex.getMessage());
-            response = ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(responseBody);
+            responseBody.put("message", "An error occurred: " + ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
         }
-        return response;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> processLoginForm(@RequestBody LoginFormDTO loginFormDTO, HttpServletRequest request, String password) {
-
-        ResponseEntity<Map<String, String>> response = null;
+    public ResponseEntity<Map<String, String>> processLoginForm(@RequestBody LoginFormDTO loginFormDTO,
+                                                                 HttpServletRequest request) {
         Map<String, String> responseBody = new HashMap<>();
-        User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
-        setUserInSession(request.getSession(), theUser);
-        if (theUser == null) {
-            responseBody.put("message", "Username/email or does not exist.");
-            response = ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(responseBody);
-        } else if(!theUser.isMatchingPassword(loginFormDTO.getPassword())) {
-            responseBody.put("message", "Incorrect password.");
-            response = ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(responseBody);
-        } else {
-            responseBody.put("message", "User successfully logged in.");
-            responseBody.put("username", theUser.getUsername());
-            response = ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(responseBody);
+        User user = userRepository.findByUsername(loginFormDTO.getUsername());
+
+        if (user == null) {
+            responseBody.put("message", "Username does not exist.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
         }
-        return response;
+
+        if (!user.isMatchingPassword(loginFormDTO.getPassword())) {
+            responseBody.put("message", "Incorrect password.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+        }
+
+        setUserInSession(request.getSession(), user);
+        responseBody.put("message", "User successfully logged in.");
+        responseBody.put("username", user.getUsername());
+
+        return ResponseEntity.ok(responseBody);
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public ResponseEntity<String> logout(HttpServletRequest request) {
         request.getSession().invalidate();
-        return "redirect:/login";
+        return ResponseEntity.ok("Successfully logged out.");
     }
 }
+
 

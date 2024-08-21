@@ -1,19 +1,27 @@
-import axios from 'axios';
+const BASE_API_URL = 'http://localhost:8080/api/memories'; // Ensure this is the correct endpoint
 
-const BASE_API_URL = 'http://localhost:8080/api/memories';
 
 export const fetchMemories = async () => {
   try {
-      const response = await axios.get(BASE_API_URL, {
-          withCredentials: true,
-      });
-      return response.data;
+    const response = await fetch(BASE_API_URL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include', // Use 'include' to ensure cookies are included in cross-origin requests
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json(); // Parse the response as JSON
+    return data; // Return the fetched data
   } catch (error) {
-      console.error("There was an error fetching the memories!", error);
-      throw error; 
+    console.error('There was an error fetching the memories!', error);
+    throw error;
   }
 };
-
 
 export const fetchMemoriesByChild = async (childId) => {
   try {

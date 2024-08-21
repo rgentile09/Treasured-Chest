@@ -38,7 +38,7 @@ const Navigation = ({ isLoggedIn, handleLogout }) => {
                                 <Link className="nav-link" to="/firsts">First Memories</Link>
                                 </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/questionaire">Questionnaire</Link>
+                                <Link className="nav-link" to="/questionnaire">Questionnaire</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/" onClick={handleLogout}>Logout</Link>
@@ -61,3 +61,4 @@ const Navigation = ({ isLoggedIn, handleLogout }) => {
 }
 
 export default Navigation;
+
