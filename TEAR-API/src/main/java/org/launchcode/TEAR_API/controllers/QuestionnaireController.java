@@ -7,7 +7,7 @@ import org.launchcode.TEAR_API.models.Questionnaire;
 import org.launchcode.TEAR_API.models.User;
 import org.launchcode.TEAR_API.repositories.ChildRepository;
 import org.launchcode.TEAR_API.repositories.QuestionnaireRepository;
-import org.launchcode.TEAR_API.repositories.UserRepository; // Assuming you have a UserRepository
+//import org.launchcode.TEAR_API.repositories.UserRepository; // Assuming you have a UserRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,40 +62,42 @@ public class QuestionnaireController {
 
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> addQuestionnaire(HttpSession session, @RequestParam Long childId,
-                                                                 @RequestBody Questionnaire newQuestionnaire) {
+    public ResponseEntity<Map<String, String>> addQuestionnaire(HttpSession session, 
+                                                                 @RequestBody Questionnaire questionnaireRequest) {
         User user = userController.getUserFromSession(session);
         Map<String, String> responseBody = new HashMap<>();
         
         if (user != null) {
-            //Long childId = newQuestionnaire.getChild().getId();
+            Long childId = questionnaireRequest.getChild().getId(); // Assuming childId is sent in the request body
             Optional<Child> optionalChild = childRepository.findById(childId);
-
+    
             if (optionalChild.isPresent()) {
                 Child child = optionalChild.get();
-                // check if userId equals the child's userID
+                // Check if userId equals the child's userID
                 if (!child.getUser().getId().equals(user.getId())) {
-                    responseBody.put("message", "Cannot add memory. This is not your Child!");
+                    responseBody.put("message", "Cannot add questionnaire. This is not your Child!");
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
                 }
-            // Optionally set the user for the new questionnaire if needed
-            newQuestionnaire.setUser(user);
-            newQuestionnaire.setChild(child);
-
-            // Save the new questionnaire to the repository
-            questionnaireRepository.save(newQuestionnaire);
-
-            responseBody.put("message", "Questionnaire successfully created");
-            return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
-        } else {    
-            responseBody.put("message", "Child not found");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
+    
+                // Set the user and child for the new questionnaire
+                questionnaireRequest.setUser(user);
+                questionnaireRequest.setChild(child);
+    
+                // Save the new questionnaire to the repository
+                questionnaireRepository.save(questionnaireRequest);
+    
+                responseBody.put("message", "Questionnaire successfully created");
+                return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
+            } else {    
+                responseBody.put("message", "Child not found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
+            }
+        } else {
+            responseBody.put("message", "User not found in session");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
         }
-    } else {
-        responseBody.put("message", "User not found in session");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
     }
-}
+    
 
     @DeleteMapping("/{questionnaireId}")
     public ResponseEntity<Map<String, String>> deleteQuestionnaire(@PathVariable Long questionnaireId) {

@@ -1,12 +1,9 @@
 package org.launchcode.TEAR_API.models;
 
-import java.util.HashMap;
-
 import jakarta.persistence.*;
 
 @Entity
 public class Questionnaire {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,11 +11,12 @@ public class Questionnaire {
     private String vacation;
     private String growth;
     private String summary;
-@ManyToOne
-@JoinColumn(name= "user_id") private User user;
-
-@ManyToOne
-@JoinColumn(name= "child_id") private Child child;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "child_id")
+    private Child child;
 
     // Getters and Setters
 
