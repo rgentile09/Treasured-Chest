@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const BASE_API_URL = 'http://localhost:8080/api/memories'; // Ensure this is the correct endpoint
 
 

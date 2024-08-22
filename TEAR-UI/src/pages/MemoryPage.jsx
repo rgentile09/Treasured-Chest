@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchMemoriesByChild, deleteMemory, searchMemory} from "../services/memoryService";
+import { fetchMemories, deleteMemory, searchMemory} from "../services/memoryService";
 import { MemoryTable } from "../components/MemoryTable";
 import { Search } from "../components/Search";
 
@@ -10,7 +10,7 @@ const MemoryPage = ({ memories, setMemories }) => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const memoriesData = await fetchMemoriesByChild();
+        const memoriesData = await fetchMemories();
         setMemories(memoriesData);
       } catch (error) {
         setError("Error fetching data.");
