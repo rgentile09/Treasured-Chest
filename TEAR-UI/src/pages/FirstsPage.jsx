@@ -20,7 +20,7 @@ const FirstsPage = () => {
   }, []);
 
   return (
-    <div className="wrapper">
+    <div className="wrapper-vertical">
       <h2>First Memories</h2>
       <div className="row">
         {firsts.map(first => (
