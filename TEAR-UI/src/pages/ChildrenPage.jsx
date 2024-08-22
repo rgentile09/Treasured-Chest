@@ -33,10 +33,10 @@ const ChildrenPage = ({ children, setChildren }) => {
   };
 
   return (
-    <div className="mt-5 container">
-      <div className="card">
-        <div className="card-header">Your Children</div>
-        <div className="card-body">
+    <div className="wrapper-vertical">
+      <div className="child-display">
+        <h2>Your Children</h2>
+        <div className="child-row">
           {loading ? <p>Loading...</p> : <ChildTable children={children} deleteChild={handleDeleteChild} />}
           {error && <div className="alert alert-danger">{error}</div>}
         </div>

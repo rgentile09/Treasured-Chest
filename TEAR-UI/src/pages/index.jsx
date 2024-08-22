@@ -37,8 +37,10 @@ const Home = () => {
         <div className="home-image-container">
           <img src={`http://localhost:8080${randomMemory.imageUrl}`} className="home-image" alt={randomMemory.title}/>
           <div className="card-body">
+            <p>&nbsp;</p>
             <h4>{randomMemory.title}</h4>
             <p>{randomMemory.description}</p>
+            <p>&nbsp;</p>
           </div>
         </div>
       ) : (
