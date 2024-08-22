@@ -13,22 +13,22 @@ public class Comment {
     private String text;
 
     @ManyToOne
-    @JoinColumn(name = "memory_id")
+    @JoinColumn(name = "memory_id", nullable = false)
     private Memory memory;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "child_id", nullable = false)
+    private Child child;
 
     private LocalDateTime createdAt;
 
     // Constructors
     public Comment() {}
 
-    public Comment(String text, Memory memory, User user) {
+    public Comment(String text, Memory memory, Child child) {
         this.text = text;
         this.memory = memory;
-        this.user = user;
+        this.child = child;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -57,12 +57,12 @@ public class Comment {
         this.memory = memory;
     }
 
-    public User getUser() {
-        return user;
+    public Child getChild() {
+        return child;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setChild(Child child) {
+        this.child = child;
     }
 
     public LocalDateTime getCreatedAt() {

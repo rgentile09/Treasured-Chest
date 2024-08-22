@@ -170,6 +170,47 @@ public class MemoryController {
         }
     }
 
+    @PostMapping("/{memoryId}/comments")
+    public ResponseEntity<Map<String, String>> createComment(HttpSession session,
+                                                             @PathVariable Long memoryId,
+                                                             @RequestParam String text) {
+        Map<String, String> responseBody = new HashMap<>();
+        User user = userController.getUserFromSession(session);
+
+        if (user != null) {
+            Memory memory = memoryRepository.findById(memoryId).orElse(null);
+
+            if (memory != null) {
+                Child child = memory.getChild(); // Get the associated Child from Memory
+                Comment comment = new Comment(text, memory, child); // Pass the Child to Comment
+                commentRepository.save(comment);
+                responseBody.put("message", "Comment successfully created");
+                return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
+            } else {
+                responseBody.put("message", "Memory not found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
+            }
+        } else {
+            responseBody.put("message", "User not found in session");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
+        }
+    }
+
+    @PostMapping("/{memoryId}/comments/delete")
+    public ResponseEntity<Map<String, String>> deleteComment(@PathVariable Long memoryId,
+                                                             @RequestParam Long commentId) {
+        Map<String, String> responseBody = new HashMap<>();
+
+        if (commentRepository.existsById(commentId)) {
+            commentRepository.deleteById(commentId);
+            responseBody.put("message", "Comment successfully deleted");
+            return ResponseEntity.ok(responseBody);
+        } else {
+            responseBody.put("message", "Comment not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
+        }
+    }
+
 }
 
 
