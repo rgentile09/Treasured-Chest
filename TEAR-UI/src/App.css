@@ -38,9 +38,7 @@ img.logo {
 }
 
 .navbar {
-  width: calc(100vw - 80px); 
-  height: auto; 
-  padding: 2rem 2rem; 
+  padding: 1rem 1rem !important; 
   background-color: var(--dark-grey); 
 }
 
@@ -50,6 +48,13 @@ img.logo {
 
 .wrapper {
   display: flex; 
+  top: 80px; 
+}
+
+.wrapper-vertical {
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
   top: 80px; 
 }
 
@@ -150,9 +155,28 @@ input:focus, textarea:focus {
   height: 100vh;
 }
 
+.home-image-container {
+  display: flex; 
+  align-items: center; 
+}
+
+.home-image {
+  max-width: 800px; 
+  width:100%; 
+}
+
+h4 {
+  color: var(--grey) !important;
+}
+
 /* Desktop */
 @media screen and (min-width: 1024px) {
   .wrapper {
+    width: 100vw; 
+    height: auto; 
+  }
+
+  .wrapper-vertical {
     width: 100vw; 
     height: auto; 
   }
