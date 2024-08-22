@@ -4,6 +4,7 @@ import { updateMemory, fetchMemoryById } from '../services/memoryService';
 import { useNavigate, useParams } from "react-router-dom";
 
 export const UpdateMemoryForm = () => {
+    const [memory, setMemory] = useState(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [file, setFile] = useState(null);
@@ -17,10 +18,11 @@ export const UpdateMemoryForm = () => {
         const loadMemory = async () => {
             try {
                 const memory = await fetchMemoryById(memoryId);
+                setMemory(memory);
                 setTitle(memory.title);
                 setDescription(memory.description);
-                setIsFirst(memory.isFirst);
-                setChildId(memory.childId); 
+                setIsFirst(memory.isFirst || false);
+                setChildId(memory.childId);
             } catch (error) {
                 console.error("Error fetching memory:", error);
             }
@@ -46,10 +48,12 @@ export const UpdateMemoryForm = () => {
         if (description !== "") formData.append("description", description);
         if (title !== "") formData.append("title", title);
         if (file) formData.append("file", file);
-        formData.append("isFirst", isFirst);
-
+        if (isFirst) formData.append("isFirst", isFirst);
+        if (childId !== memory.child.id) {
+            formData.append("newChildId", childId);
+        }
         try {
-            await updateMemory(formData, childId, memoryId);
+            await updateMemory(formData, memory.child.id, memoryId);
             navigate('/memories');
         } catch (error) {
             console.error("Error updating memory:", error);
@@ -91,7 +95,6 @@ export const UpdateMemoryForm = () => {
                 <select 
                     value={childId} 
                     onChange={(e) => setChildId(e.target.value)} 
-                    required
                 >
                     <option value="">Select a child</option>
                     {children.map(child => (
