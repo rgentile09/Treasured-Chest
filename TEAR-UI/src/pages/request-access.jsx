@@ -1,1 +1,0 @@
-// Form page to request access to view a user's account 

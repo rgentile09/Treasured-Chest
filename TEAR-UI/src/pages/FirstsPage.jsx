@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchFirsts } from '../services/memoryService'; // Ensure fetchFirsts is defined in your memoryService
+import { fetchFirsts } from '../services/memoryService'; 
 import { useNavigate } from "react-router-dom";
 
 const FirstsPage = () => {
@@ -9,7 +9,7 @@ const FirstsPage = () => {
   useEffect(() => {
     const loadFirsts = async () => {
       try {
-        const data = await fetchFirsts(); // Fetch the memories marked as "firsts"
+        const data = await fetchFirsts();
         setFirsts(data);
       } catch (error) {
         console.error("Failed to load firsts:", error);

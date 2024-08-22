@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_API_URL = 'http://localhost:8080/api/memories'; // Ensure this is the correct endpoint
+const BASE_API_URL = 'http://localhost:8080/api/memories'; 
 
 
 export const fetchMemories = async () => {
@@ -113,6 +113,35 @@ export const fetchFirsts = async () => {
       throw error;
   }
 }; 
+
+export const updateMemory = async (formData, childId, memoryId) => {
+  try {
+    const response = await fetch(`${BASE_API_URL}/child/${childId}/memory/${memoryId}`, {
+      method: 'PUT',
+      body: formData,
+      credentials: 'include', // Include credentials (cookies)
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('There was an error updating the memory!', error);
+    throw error;
+  }
+};
+
+export const fetchMemoryById = async (memoryId) => {
+  try {    
+    const response = await axios.get(`${BASE_API_URL}/${memoryId}`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('There was an error fetching the memory!', error);
+    throw error;
+  }
+};
 
 
 

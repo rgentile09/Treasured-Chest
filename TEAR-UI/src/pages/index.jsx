@@ -4,19 +4,19 @@ import axios from 'axios';
 const Home = () => {
   const [randomMemory, setRandomMemory] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // Define loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRandomMemory = async () => {
-      setLoading(true); // Start loading
+      setLoading(true); 
       try {
         const response = await axios.get('http://localhost:8080/api/memories/random', { withCredentials: true });
         setRandomMemory(response.data);
-        setError(null); // Clear any previous errors
+        setError(null); 
       } catch (error) {
         setError("Error fetching data.");
       } finally {
-        setLoading(false); // End loading
+        setLoading(false); 
       }
     };
 
@@ -24,7 +24,7 @@ const Home = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading your random memory...</p>; // Show loading state
+    return <p>Loading your random memory...</p>;
   }
 
   return (

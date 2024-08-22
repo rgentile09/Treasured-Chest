@@ -21,14 +21,15 @@ import ChildDetail from './components/ChildDetail';
 import ChildTable from './components/ChildTable';
 import ChildrenPage from './pages/ChildrenPage';
 import Questionnaire from './pages/questionnaire';
-import { useDarkMode } from './components/DarkModeContext'; // Ensure the path is correct
+import { useDarkMode } from './components/DarkModeContext'; 
+import { UpdateMemoryForm } from './components/UpdateMemoryForm';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [memories, setMemories] = useState([]);
   const [child, setChild] = useState([]);
   const [children, setChildren] = useState([]);
-  const { isDarkMode, toggleDarkMode } = useDarkMode(); // Use dark mode context
+  const { isDarkMode, toggleDarkMode } = useDarkMode(); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,9 +49,7 @@ function App() {
       <Navigation isLoggedIn={authenticated} handleLogout={() => setAuthenticated(false)} />
       <div className={`App ${isDarkMode ? 'dark-mode' : ''}`}>
         <header className="App-header">
-          <button onClick={toggleDarkMode} className="dark-mode-toggle">
-            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-          </button>
+      
           <Routes>
             {/* Public Routes */}
             <Route path="/login" element={<Login setAuthenticated={setAuthenticated} />} />
@@ -64,6 +63,7 @@ function App() {
                 <Route path="/memory" element={<AddMemoryPage addMemory={addMemory} />} />
                 <Route path="/add-memory" element={<DisplayMemory memoryPost={memoryPost} />} />
                 <Route path="/memory/:memoryId" element={<MemoryDetail memories={memories} />} />
+                <Route path="/memories/:memoryId/edit" element={<UpdateMemoryForm />} />
                 <Route path="/firsts" element={<FirstsPage />} />
                 <Route path="/questionnaire" element={<Questionnaire />} />
                 <Route path="/add-child" element={<AddChildPage addChild={setChild} />} />

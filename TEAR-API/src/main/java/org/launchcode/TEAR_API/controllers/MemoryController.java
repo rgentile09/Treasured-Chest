@@ -49,7 +49,7 @@ public class MemoryController {
             List<Memory> memories = memoryRepository.findByUser(user);
             return ResponseEntity.ok(memories);
         } else {
-            // Return unauthorized status if user is not found in session
+            /// User not found in session
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -74,7 +74,7 @@ public class MemoryController {
                                                             HttpSession session,
                                                             @RequestParam String description,
                                                             @RequestParam String title,
-                                                            @RequestParam("file") MultipartFile file,
+                                                            @RequestParam(value = "file", required = false) MultipartFile file,
                                                             @RequestParam(defaultValue = "false") boolean isFirst) throws IOException {
         // Fetch the user from the session
         User user = userController.getUserFromSession(session);
@@ -150,6 +150,84 @@ public class MemoryController {
             }
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // User not found in session
+        }
+    }
+
+    @PutMapping("/child/{childId}/memory/{memoryId}")
+    public ResponseEntity<Map<String, String>> updateMemory(@PathVariable Long childId,
+                                                            @PathVariable Long memoryId,
+                                                            HttpSession session,
+                                                            @RequestParam(required = false) String description,
+                                                            @RequestParam(required = false) String title,
+                                                            @RequestParam(value = "file", required = false) MultipartFile file,
+                                                            @RequestParam(defaultValue = "false") boolean isFirst,
+                                                            @RequestParam(required = false) Long newChildId) throws IOException {
+
+        User user = userController.getUserFromSession(session);
+        Map<String, String> responseBody = new HashMap<>();
+
+        if (user != null) {
+            Optional<Child> optionalChild = childRepository.findById(childId);
+            if (optionalChild.isPresent()) {
+                Child child = optionalChild.get();
+                // check if userId equals the child's userID
+                if (!child.getUser().getId().equals(user.getId())) {
+                    responseBody.put("message", "Cannot update memory. This is not your Child!");
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
+                }
+
+                Optional<Memory> optionalMemory = memoryRepository.findById(memoryId);
+                if (optionalMemory.isPresent()) {
+                    Memory memoryToUpdate = optionalMemory.get();
+
+                        // Send in newChildId if changing childId. Get that child and set as new ChildID
+                    if (newChildId != null && !newChildId.equals(childId)) {
+                        Optional<Child> newChild = childRepository.findById(newChildId);
+                        if (newChild.isPresent()) {
+                            memoryToUpdate.setChild(newChild.get());
+                        } else {
+                            responseBody.put("message", "New child not found");
+                            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
+                        }
+                    }
+                    // Check if new file is sent in and set as new image
+                    if (file != null && !file.isEmpty()) {
+                        String fileName = file.getOriginalFilename();
+                        Path filePath = Paths.get(UPLOAD_DIR, fileName);
+                        Files.createDirectories(filePath.getParent());
+                        Files.write(filePath, file.getBytes());
+
+                        System.out.println("File updated at: " + filePath.toAbsolutePath());
+                        memoryToUpdate.setImageUrl("/uploads/" + fileName);
+                    }
+                        // Check if other new info sent and set before saving the new memory
+                    if (description != null) memoryToUpdate.setDescription(description);
+                    if (title != null) memoryToUpdate.setTitle(title);
+                    memoryToUpdate.setFirst(isFirst);
+                    memoryRepository.save(memoryToUpdate);
+                    responseBody.put("message", "Memory successfully updated");
+                    return ResponseEntity.ok(responseBody);
+                } else {
+                    responseBody.put("message", "Memory not found");
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
+                }
+            } else {
+                responseBody.put("message", "Child not found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
+            }
+        } else {
+            responseBody.put("message", "User not found in session");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
+        }
+    }
+
+    @GetMapping("/{memoryId}")
+    public ResponseEntity<Memory> getMemoryById(@PathVariable Long memoryId) {
+        Optional<Memory> optionalMemory = memoryRepository.findById(memoryId);
+        if (optionalMemory.isPresent()) {
+            return ResponseEntity.ok(optionalMemory.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
