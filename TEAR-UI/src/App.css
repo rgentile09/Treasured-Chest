@@ -162,6 +162,10 @@ input:focus, textarea:focus {
   max-width: 1500px; 
 }
 
+.card {
+  max-width: 1300px; 
+}
+
 .child-display{
   display: flex; 
   flex-direction: column;

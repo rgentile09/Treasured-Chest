@@ -45,7 +45,7 @@ const MemoryPage = ({ memories, setMemories }) => {
   };
 
   return (
-    <div className="mt-5 container">
+    <div className="wrapper-vertical">
       <div className="card">
         <div className="card-header">Your Memories</div>
         <div className="card-body">

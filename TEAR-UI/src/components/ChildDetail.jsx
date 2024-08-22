@@ -54,9 +54,9 @@ const handleSearchMemory = (keyword) => {
   }
 
   return (
-    <div>
+    <div className="wrapper-vertical">
     <div className="container mt-5">
-      <div className="card" style={{ textAlign: 'center', padding: '20px' }}>
+      <div style={{ textAlign: 'center', padding: '20px' }}>
         <h5 className="card-title centered-title mb-5" style={{ fontSize: '5rem', marginBottom: '20px' }}>
           {child.firstName}
         </h5>
