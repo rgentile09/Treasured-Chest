@@ -5,8 +5,8 @@ export const ChildCard = ({ child, deleteChild }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="col-md-4 mb-4" onClick={() => navigate(`/children/${child.id}`)}>
-        <div className="card-body">
+    <div onClick={() => navigate(`/children/${child.id}`)}>
+        <div className="child">
           <h5 className="card-title">{child.firstName}</h5>
           <p className="card-text">{child.birthDate}</p>
           <button

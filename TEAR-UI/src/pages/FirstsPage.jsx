@@ -20,7 +20,7 @@ const FirstsPage = () => {
   }, []);
 
   return (
-    <div className="container mt-5">
+    <div className="wrapper-vertical">
       <h2>First Memories</h2>
       <div className="row">
         {firsts.map(first => (
