@@ -28,16 +28,19 @@ const Home = () => {
   }
 
   return (
-    <div className="container mt-5">
-      <h2>Welcome to Your Memory App</h2>
+    <div className="wrapper-vertical">
+      <h1>Welcome to Treasured Chest!</h1>
+      <h4>Here's one of your beautiful memories!</h4>
+      <p>&nbsp;</p>
       {error && <div className="alert alert-danger">{error}</div>}
       {randomMemory ? (
-        <div className="card mt-4">
-          <label>One of your beautiful memories!</label>
-          <img src={`http://localhost:8080${randomMemory.imageUrl}`} className="card-img-top" alt={randomMemory.title} />
+        <div className="home-image-container">
+          <img src={`http://localhost:8080${randomMemory.imageUrl}`} className="home-image" alt={randomMemory.title}/>
           <div className="card-body">
-            <h5 className="card-title">{randomMemory.title}</h5>
-            <p className="card-text">{randomMemory.description}</p>
+            <p>&nbsp;</p>
+            <h4>{randomMemory.title}</h4>
+            <p>{randomMemory.description}</p>
+            <p>&nbsp;</p>
           </div>
         </div>
       ) : (

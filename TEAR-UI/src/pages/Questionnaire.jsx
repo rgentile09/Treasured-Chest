@@ -75,7 +75,7 @@ function Questionnaire() {
   };
 
   return (
-    <div className="form-container">
+    <div className="wrapper-vertical">
       <h1>Annual Questionnaire</h1>
       <form onSubmit={handleSubmit}>
         <div>

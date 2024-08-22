@@ -38,9 +38,7 @@ img.logo {
 }
 
 .navbar {
-  width: calc(100vw - 80px); 
-  height: auto; 
-  padding: 2rem 2rem; 
+  padding: 1rem 1rem !important; 
   background-color: var(--dark-grey); 
 }
 
@@ -50,6 +48,14 @@ img.logo {
 
 .wrapper {
   display: flex; 
+  top: 80px; 
+}
+
+.wrapper-vertical {
+  display: flex; 
+  align-items: center; 
+  flex-direction: column;
+  justify-content: center;
   top: 80px; 
 }
 
@@ -150,11 +156,56 @@ input:focus, textarea:focus {
   height: 100vh;
 }
 
+.home-image-container {
+  display: flex; 
+  align-items: center; 
+  max-width: 1500px; 
+}
+
+.card {
+  max-width: 1300px; 
+}
+
+.child-display{
+  display: flex; 
+  flex-direction: column;
+  align-items: center; 
+  max-width: 1500px; 
+}
+
+.child-row {
+  display: flex; 
+  width: 100%;
+  gap: 1.5rem; 
+}
+
+.child {
+  display: flex; 
+  flex-direction: column;
+  width: 250px; 
+  height: 250px; 
+  border: solid var(--dark-grey);
+  border-radius: 10%;
+  justify-content: center; 
+}
+
+.home-image {
+  max-width: 800px; 
+  width:80%; 
+  padding: 0px 50px 0px 50px; 
+}
+
 /* Desktop */
 @media screen and (min-width: 1024px) {
   .wrapper {
     width: 100vw; 
     height: auto; 
+  }
+
+  .wrapper-vertical {
+    width: 100vw; 
+    height: auto; 
+    align-content: center;
   }
 
   .section {
@@ -198,6 +249,12 @@ input:focus, textarea:focus {
     height: auto; 
   }
 
+  .wrapper-vertical {
+    width: 100vw; 
+    height: auto; 
+    align-content: center;
+  }
+
   .section {
     width: 100%; 
     padding: 3rem; 
@@ -208,6 +265,12 @@ input:focus, textarea:focus {
     height: 50vh; 
     padding: 3rem; 
   }
+
+  .home-image-container {
+    display: flex; 
+    align-items: center; 
+    flex-direction: column;
+  }
 }
 
 /* Mobile */ 
@@ -216,6 +279,12 @@ input:focus, textarea:focus {
     flex-direction: column; 
     width: 100vw; 
     height: auto; 
+  }
+
+  .wrapper-vertical {
+    width: 100vw; 
+    height: auto; 
+    align-content: center;
   }
 
   h1 {
@@ -243,6 +312,12 @@ input:focus, textarea:focus {
     background-size: cover;
     background-position: center;
     color: #333; /* Ensure text is readable */
+  }
+
+  .home-image-container {
+    display: flex; 
+    align-items: center; 
+    flex-direction: column;
   }
 
   .form-container h1 {

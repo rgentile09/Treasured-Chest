@@ -54,15 +54,15 @@ const handleSearchMemory = (keyword) => {
   }
 
   return (
-    <div>
+    <div className="wrapper-vertical">
     <div className="container mt-5">
-      <div className="card" style={{ textAlign: 'center', padding: '20px' }}>
-        <h5 className="card-title centered-title mb-5" style={{ fontSize: '5rem', marginBottom: '20px' }}>
+      <div style={{ textAlign: 'center', padding: '20px' }}>
+        <h1>
           {child.firstName}
-        </h5>
-        <p className="card-text centered-text mt-5" style={{ fontSize: '2rem', marginTop: '20px' }}>
+        </h1>
+        <h3 className="card-text centered-text mt-5" style={{ marginTop: '10px' }}>
           Date of Birth: {child.birthDate}
-        </p>
+        </h3>
       </div>
     </div>
   <div className="mt-5 container">
