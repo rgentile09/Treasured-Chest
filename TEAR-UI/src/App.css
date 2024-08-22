@@ -172,6 +172,7 @@ input:focus, textarea:focus {
 .child-row {
   display: flex; 
   width: 100%;
+  gap: 1.5rem; 
 }
 
 .child {
