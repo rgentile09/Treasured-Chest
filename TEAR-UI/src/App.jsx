@@ -49,9 +49,7 @@ function App() {
       <Navigation isLoggedIn={authenticated} handleLogout={() => setAuthenticated(false)} />
       <div className={`App ${isDarkMode ? 'dark-mode' : ''}`}>
         <header className="App-header">
-          <button onClick={toggleDarkMode} className="dark-mode-toggle">
-            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-          </button>
+      
           <Routes>
             {/* Public Routes */}
             <Route path="/login" element={<Login setAuthenticated={setAuthenticated} />} />

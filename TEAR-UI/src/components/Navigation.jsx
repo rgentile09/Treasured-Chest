@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDarkMode } from './DarkModeContext'; 
 
 const Navigation = ({ isLoggedIn, handleLogout }) => {
+    const { isDarkMode, toggleDarkMode } = useDarkMode();
     return (
         <nav className="navbar navbar-expand-lg navbar-dark">
             <Link className="navbar-brand" to="/">
@@ -43,6 +45,9 @@ const Navigation = ({ isLoggedIn, handleLogout }) => {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/" onClick={handleLogout}>Logout</Link>
                             </li>
+                            <button onClick={toggleDarkMode} className="dark-mode-toggle">
+                             {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+                            </button>
                         </>
                     ) : (
                         <>
