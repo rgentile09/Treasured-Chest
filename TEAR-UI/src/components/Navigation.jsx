@@ -28,9 +28,9 @@ const Navigation = ({ isLoggedIn, handleLogout }) => {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/memories">Memories</Link>
                             </li>
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <Link className="nav-link" to="/memory">Memories</Link>
-                            </li>
+                            </li> */}
                             <li className="nav-item">
                                 <Link className="nav-link" to="/add-child">Add a Child</Link>
                             </li>

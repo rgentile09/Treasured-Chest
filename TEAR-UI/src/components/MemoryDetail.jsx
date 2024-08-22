@@ -72,7 +72,8 @@ const MemoryDetail = ({ memories }) => {
           <ul className="list-unstyled">
             {comments.map((comment) => (
               <li key={comment.id} className="mb-2">
-                <strong>{comment.user.username}</strong>: {comment.text} <em>({new Date(comment.createdAt).toLocaleString()})</em>
+                 <strong>{comment.child?.firstName || "You"}</strong>: {comment.text} <em>({new Date(comment.createdAt).toLocaleString()})</em>
+
                 <button 
                   onClick={() => handleDeleteComment(comment.id)} 
                   className="btn btn-danger btn-sm ml-2"
