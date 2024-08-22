@@ -62,7 +62,7 @@ export const UpdateMemoryForm = () => {
     };
 
     return (
-        <div className="section">
+        <div className="wrapper-vertical">
             <h2>Update Memory</h2>
             <form onSubmit={handleSubmit}>
                 <input
