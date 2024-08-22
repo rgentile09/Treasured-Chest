@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link} from "react-router-dom";
 
 export const MemoryCard = ({ memory, deleteMemory }) => {
   const navigate = useNavigate();
@@ -21,6 +21,13 @@ export const MemoryCard = ({ memory, deleteMemory }) => {
           >
             Delete
           </button>
+          <Link 
+          to={`/memories/${memory.id}/edit`} 
+          className="btn btn-primary"
+          onClick={(e) => e.stopPropagation()} 
+        >
+          Edit
+        </Link>
         </div>
       </div>
     </div>
