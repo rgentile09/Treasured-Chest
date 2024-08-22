@@ -249,6 +249,12 @@ input:focus, textarea:focus {
     height: auto; 
   }
 
+  .wrapper-vertical {
+    width: 100vw; 
+    height: auto; 
+    align-content: center;
+  }
+
   .section {
     width: 100%; 
     padding: 3rem; 
@@ -273,6 +279,12 @@ input:focus, textarea:focus {
     flex-direction: column; 
     width: 100vw; 
     height: auto; 
+  }
+
+  .wrapper-vertical {
+    width: 100vw; 
+    height: auto; 
+    align-content: center;
   }
 
   h1 {
