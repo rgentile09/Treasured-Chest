@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/children")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(origins = "https://treasured-chest.netlify.app", allowCredentials = "true")
 public class ChildController {
     @Autowired
     private ChildRepository childRepository;

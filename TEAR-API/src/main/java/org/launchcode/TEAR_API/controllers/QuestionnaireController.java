@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/questionnaires")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(origins = "https://treasured-chest.netlify.app", allowCredentials = "true")
 public class QuestionnaireController {
 
     @Autowired
